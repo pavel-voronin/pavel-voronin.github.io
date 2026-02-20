@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap");
+@import "tailwindcss";
+
+@layer base {
+  html {
+    @apply bg-surface;
+  }
+}
+
+@theme {
+  --font-sans: Inter, "sans-serif";
+
+  /* Breakpoints */
+  --breakpoint-sidenav: 60rem;
+
+  /* Content layout */
+  --content-max: 60ch;
+  --content-min: 35ch;
+  --content-guard: 3ch;
+
+  /* Surface */
+  --color-surface: oklch(97% 0.001 106.424);
+  --color-overlay: oklch(14.7% 0.004 49.25);
+  --color-code-bg: #1a1a2e;
+
+  /* Text */
+  --color-heading: oklch(21.6% 0.006 56.043);
+  --color-body: oklch(26.8% 0.007 34.298);
+  --color-subtle: oklch(37.4% 0.01 67.558);
+  --color-muted: oklch(44.4% 0.011 73.639);
+  --color-caption: oklch(55.3% 0.013 58.071);
+  --color-faint: oklch(70.9% 0.01 56.259);
+
+  /* Border */
+  --color-edge: oklch(86.9% 0.005 56.366);
+  --color-edge-light: oklch(92.3% 0.003 48.717);
+
+  /* Accent (blue) */
+  --color-accent: oklch(54.6% 0.245 262.881);
+  --color-accent-soft: oklch(70.7% 0.165 254.624);
+  --color-accent-surface: oklch(93.2% 0.032 255.585);
+
+  /* Code */
+  --color-code-text: oklch(92.3% 0.003 48.717);
+
+  /* Component-specific */
+  --color-badge-bg: oklch(98.4% 0.014 180.72);
+  --color-badge-border: oklch(91% 0.096 180.426);
+  --color-badge-text: oklch(51.1% 0.096 186.391);
+  --color-alert-bg: oklch(88.5% 0.062 18.334);
+  --color-alert-text: oklch(50.5% 0.213 27.518);
+}

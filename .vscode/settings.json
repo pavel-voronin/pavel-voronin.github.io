@@ -1,0 +1,16 @@
+{
+    "css.lint.unknownAtRules": "ignore",
+    "mdc.enableComponentMetadataCompletions": true,
+    "mdc.componentMetadataLocalFilePattern": "**/.nuxt/component-meta.mjs",
+    "mdc.debug": true,
+    "mdc.enableFormatting": true,
+    "[mdc]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.formatOnPaste": true
+    },
+    "tailwindCSS.classFunctions": [
+        "tv"
+    ]
+}
