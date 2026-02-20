@@ -1,14 +1,27 @@
 <template>
   <div class="skillsRoot" :style="rootStyle">
     <ClientOnly fallback-tag="div" fallback=" ">
-      <component
-        :is="selectedComponent"
-        class="skillsMount"
-        :nodes="props.nodes"
-        :edges="props.edges"
-        :height="props.height"
-        :interactive="props.interactive"
-      />
+      <div class="skillsMobile">
+        <component
+          :is="mobileFocusedD3Component"
+          class="skillsMount"
+          :nodes="props.nodes"
+          :edges="props.edges"
+          :height="props.height"
+          :interactive="props.interactive"
+        />
+      </div>
+
+      <div class="skillsDesktop">
+        <component
+          :is="d3Component"
+          class="skillsMount"
+          :nodes="props.nodes"
+          :edges="props.edges"
+          :height="props.height"
+          :interactive="props.interactive"
+        />
+      </div>
 
       <template #fallback>
         <div class="skillsFallback" aria-hidden="true" />
@@ -37,10 +50,7 @@ const props = withDefaults(
 )
 
 const d3Component = defineAsyncComponent(() => import('./SkillsGraphD3Canvas.client.vue'))
-
-const selectedComponent = computed(() => {
-  return d3Component
-})
+const mobileFocusedD3Component = defineAsyncComponent(() => import('./SkillsGraphD3Focused.client.vue'))
 
 const rootStyle = computed(() => {
   if (!props.height) {
@@ -60,6 +70,14 @@ const rootStyle = computed(() => {
 
 .skillsMount {
   @apply block w-full h-full;
+}
+
+.skillsMobile {
+  @apply block h-full w-full lg:hidden;
+}
+
+.skillsDesktop {
+  @apply hidden h-full w-full lg:block;
 }
 
 .skillsFallback {

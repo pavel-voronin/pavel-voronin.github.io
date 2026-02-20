@@ -53,6 +53,8 @@ interface CanvasEdge extends SimulationLinkDatum<CanvasNode> {
   weight: number
 }
 
+const DESKTOP_FONT_SCALE = 1.2
+
 const props = withDefaults(
   defineProps<{
     nodes?: SkillNode[]
@@ -122,9 +124,10 @@ const getNodeAtPosition = (clientX: number, clientY: number): CanvasNode | null 
     const dy = nodeY - world.y
     const inCircle = Math.sqrt(dx * dx + dy * dy) <= visuals.radius + 6
 
-    const textWidth = Math.max(18, node.label.length * visuals.fontSize * 0.58)
+    const scaledFontSize = visuals.fontSize * DESKTOP_FONT_SCALE
+    const textWidth = Math.max(18, node.label.length * scaledFontSize * 0.58)
     const textHalfWidth = textWidth / 2
-    const textHalfHeight = visuals.fontSize * 0.62
+    const textHalfHeight = scaledFontSize * 0.62
     const inText =
       world.x >= nodeX - textHalfWidth &&
       world.x <= nodeX + textHalfWidth &&
@@ -184,7 +187,7 @@ const render = () => {
     const nodeX = node.x ?? 0
     const nodeY = node.y ?? 0
 
-    context.font = `${visuals.fontSize}px Inter, sans-serif`
+    context.font = `${Math.round(visuals.fontSize * DESKTOP_FONT_SCALE)}px Inter, sans-serif`
     context.textAlign = 'center'
     context.textBaseline = 'middle'
     context.fillStyle = getCategoryColor(node.category)
@@ -211,10 +214,11 @@ const fitGraphToViewport = () => {
     const visuals = getNodeVisual(node.level)
     const nodeX = node.x ?? node.homeX
     const nodeY = node.y ?? node.homeY
-    minX = Math.min(minX, nodeX - visuals.radius)
-    maxX = Math.max(maxX, nodeX + visuals.radius)
-    minY = Math.min(minY, nodeY - visuals.radius)
-    maxY = Math.max(maxY, nodeY + visuals.radius)
+    const scaledRadius = visuals.radius * (1 + (DESKTOP_FONT_SCALE - 1) * 0.6)
+    minX = Math.min(minX, nodeX - scaledRadius)
+    maxX = Math.max(maxX, nodeX + scaledRadius)
+    minY = Math.min(minY, nodeY - scaledRadius)
+    maxY = Math.max(maxY, nodeY + scaledRadius)
   }
 
   const graphWidth = Math.max(1, maxX - minX)
@@ -269,7 +273,12 @@ const initializeGraph = async () => {
         .distance((edge) => 95 / (edge.weight ?? 1))
         .strength((edge) => Math.min(0.22, 0.06 + (edge.weight ?? 1) * 0.08)),
     )
-    .force('collision', forceCollide<CanvasNode>().radius((node) => getNodeVisual(node.level).radius + 8))
+    .force(
+      'collision',
+      forceCollide<CanvasNode>().radius(
+        (node) => getNodeVisual(node.level).radius * (1 + (DESKTOP_FONT_SCALE - 1) * 0.5) + 10,
+      ),
+    )
     .force('center', forceCenter(0, 0))
     .force('home-x', forceX<CanvasNode>((node) => node.homeX).strength(0.07))
     .force('home-y', forceY<CanvasNode>((node) => node.homeY).strength(0.07))
