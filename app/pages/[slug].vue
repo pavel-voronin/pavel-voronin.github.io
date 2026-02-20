@@ -3,7 +3,6 @@
     <template #header>
       <div class="articleHeader" :class="{ 'articleHeader--withIcon': Boolean(page?.icon) }"
         :style="page?.icon ? { '--title-lines': page.titleLines ?? 1 } : undefined">
-        <!-- Narrow-only icon: always 2-line size, shown via @container -->
         <div v-if="page?.icon" class="articleIconTop">
           <Icon :name="page.icon" />
         </div>
@@ -12,7 +11,6 @@
           {{ formatPostDate(page.date) }}
         </p>
 
-        <!-- Wide-only icon: sized to titleLines via CSS custom property -->
         <div v-if="page?.icon" class="articleIcon">
           <Icon :name="page.icon" />
         </div>
@@ -92,13 +90,7 @@ const formatPostDate = (value: string) => {
   @apply hidden w-22.5 h-22.5;
 }
 
-.articleIconTop :deep(.iconify),
-.articleIconTop :deep(.nuxt-icon),
-.articleIconTop :deep(svg) {
-  @apply block h-full w-full;
-}
-
-@container content (width < 66ch) {
+@container content (width < 60ch) {
   .articleHeader--withIcon {
     display: flex;
     flex-direction: column;
@@ -111,6 +103,22 @@ const formatPostDate = (value: string) => {
   .articleIcon {
     display: none;
   }
+}
+
+@container content (min-width: 60ch) {
+  .articleIconTop {
+    display: none;
+  }
+
+  .articleIcon {
+    display: block;
+  }
+}
+
+.articleIconTop :deep(.iconify),
+.articleIconTop :deep(.nuxt-icon),
+.articleIconTop :deep(svg) {
+  @apply block h-full w-full;
 }
 
 .articleHeading {
