@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <TopBar class="topBar" />
+    <TopBar />
 
     <div class="columns">
       <aside class="sidebar">
@@ -23,10 +23,6 @@
 
 .page {
   @apply min-h-screen bg-surface text-body font-sans pt-14 sidenav:pt-0;
-}
-
-.topBar {
-  @apply sidenav:hidden;
 }
 
 .columns {

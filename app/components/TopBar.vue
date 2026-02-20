@@ -34,6 +34,12 @@
   @apply fixed top-0 left-0 right-0 h-14 z-50 flex items-center gap-6 px-6 bg-surface border-b border-edge/70;
 }
 
+@variant sidenav {
+  .topBar {
+    display: none;
+  }
+}
+
 .brand {
   @apply text-lg font-semibold tracking-tight text-heading no-underline;
 }
