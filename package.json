@@ -6,19 +6,22 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "skills:bake": "node --import tsx scripts/bake-skills-layout.mts"
   },
   "dependencies": {
     "@nuxt/content": "^3.11.2",
     "@nuxt/icon": "^2.2.1",
     "@tailwindcss/vite": "^4.1.18",
     "better-sqlite3": "^12.6.2",
+    "d3-force": "^3.0.0",
     "nuxt": "^4.3.1",
     "tailwind-merge": "^3.4.1",
     "tailwind-variants": "^3.2.2",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "@types/node": "^25.2.3"
+    "@types/node": "^25.2.3",
+    "tsx": "^4.21.0"
   }
 }
