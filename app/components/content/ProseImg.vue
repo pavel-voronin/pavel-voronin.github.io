@@ -5,7 +5,7 @@
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
-    class="my-10 h-auto max-w-full rounded-lg"
+    class=" h-auto max-w-full rounded-lg"
   />
 </template>
 

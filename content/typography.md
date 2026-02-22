@@ -89,8 +89,8 @@ npm run build
 
 ![Editorial desk setup](https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80)
 
-<InlineBadge text="Markdown + Vue component still works" />
-
 ## Keyboard input
 
 Use <kbd>Cmd</kbd> + <kbd>K</kbd> to open quick navigation.
+
+<InlineBadge text="Markdown + Vue component still works"></InlineBadge>

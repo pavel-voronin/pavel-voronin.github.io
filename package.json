@@ -6,8 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "skills:bake": "node --import tsx scripts/bake-skills-layout.mts"
+    "preview": "nuxt preview"
   },
   "dependencies": {
     "@nuxt/content": "^3.11.2",
