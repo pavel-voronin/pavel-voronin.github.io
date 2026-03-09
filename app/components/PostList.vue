@@ -56,7 +56,7 @@ const formatPostDate = (value: string) => {
 
 .postItem {
   @apply grid items-baseline gap-4;
-  grid-template-columns: 7rem minmax(0, 1fr);
+  grid-template-columns: 6rem minmax(0, 1fr);
 }
 
 .postItem + .postItem {
