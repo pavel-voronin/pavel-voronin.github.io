@@ -107,3 +107,81 @@ flowchart TD
 Use <kbd>Cmd</kbd> + <kbd>K</kbd> to open quick navigation.
 
 <InlineBadge text="Markdown + Vue component still works"></InlineBadge>
+
+## External link card combinations
+
+### URL only
+
+::external-link-card
+---
+url: https://example.com/url-only
+---
+::
+
+### URL + title
+
+::external-link-card
+---
+url: https://example.com/url-title
+title: External resource with title
+---
+::
+
+### URL + label
+
+::external-link-card
+---
+url: https://example.com/url-label
+label: Recommendation
+---
+::
+
+### URL + icon
+
+::external-link-card
+---
+url: https://example.com/url-icon
+icon: streamline-ultimate-color:app-window-bookmark
+---
+::
+
+### URL + title + label
+
+::external-link-card
+---
+url: https://example.com/url-title-label
+title: External resource with title and label
+label: Recommendation
+---
+::
+
+### URL + title + icon
+
+::external-link-card
+---
+url: https://example.com/url-title-icon
+title: External resource with title and icon
+icon: streamline-ultimate-color:app-window-bookmark
+---
+::
+
+### URL + label + icon
+
+::external-link-card
+---
+url: https://example.com/url-label-icon
+label: Recommendation
+icon: streamline-ultimate-color:app-window-bookmark
+---
+::
+
+### URL + title + label + icon
+
+::external-link-card
+---
+url: https://example.com/url-title-label-icon
+title: External resource with full metadata
+label: Recommendation
+icon: streamline-ultimate-color:app-window-bookmark
+---
+::
