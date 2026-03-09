@@ -73,6 +73,19 @@ npm run dev
 npm run build
 ```
 
+## Mermaid
+
+This Mermaid block is here to validate how diagrams sit inside long-form prose and whether the module styling matches the rest of the typography.
+
+```mermaid
+flowchart TD
+  Idea["Draft idea"] --> Write["Write content"]
+  Write --> Review{"Looks right?"}
+  Review -->|Yes| Publish["Publish article"]
+  Review -->|No| Refine["Adjust layout and copy"]
+  Refine --> Write
+```
+
 ## Table
 
 | Token      | Usage                        | Example               |

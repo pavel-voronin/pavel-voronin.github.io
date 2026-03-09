@@ -122,6 +122,7 @@ export default defineNuxtConfig({
             "diff",
             "html",
             "js",
+            "javascript",
             "json",
             "md",
             "mdc",

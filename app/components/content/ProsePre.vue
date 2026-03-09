@@ -1,5 +1,6 @@
 <template>
-  <pre :class="preClass"><slot /></pre>
+  <Mermaid v-if="isMermaid" :code="props.code" />
+  <pre v-else :class="preClass"><slot /></pre>
 </template>
 
 <script setup lang="ts">
@@ -30,21 +31,27 @@ const props = defineProps({
   },
 })
 
+const isMermaid = computed(() => {
+  return props.language?.toLowerCase() === "mermaid"
+})
+
 const preClass = computed(() => {
-  return ['my-8 overflow-x-auto rounded-lg bg-code-bg p-5', props.class]
-    .filter(Boolean)
-    .join(' ')
+  return ['prosePre', props.class].filter(Boolean).join(' ')
 })
 </script>
 
 <style scoped>
 @reference "~/assets/css/main.css";
 
-pre :deep(code) {
+.prosePre {
+  @apply my-8 overflow-x-auto rounded-lg bg-code-bg p-5;
+}
+
+.prosePre :deep(code) {
   @apply bg-transparent p-0 text-sm leading-relaxed text-code-text;
 }
 
-pre :deep(code .line) {
-  display: block;
+.prosePre :deep(code .line) {
+  @apply block;
 }
 </style>
