@@ -22,6 +22,8 @@
     </template>
 
     <ContentRenderer v-if="page" class="articleBody" :value="page" />
+
+    <UtterancesComments v-if="shouldShowComments" />
   </PageSection>
 </template>
 
@@ -39,6 +41,10 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+
+const shouldShowComments = computed(() => {
+  return page.value?.type === 'post' && page.value?.comments === true
+})
 useHead(() => ({
   title: page.value?.title ?? 'Pavel Voronin',
 }))

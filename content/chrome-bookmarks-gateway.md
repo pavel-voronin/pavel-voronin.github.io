@@ -5,6 +5,7 @@ date: 2026-03-09
 type: post
 icon: streamline-ultimate-color:app-window-bookmark
 titleLines: 2
+comments: true
 ---
 
 ::external-link-card
