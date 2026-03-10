@@ -105,7 +105,7 @@ export default defineNuxtConfig({
         { name: "twitter:description", content: "vibe coding the reality" },
         { name: "twitter:image", content: "/favicon.ico" },
       ],
-      link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+      link: [{ key: "site-favicon", rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
     },
   },
   modules: ["@nuxt/content", "@nuxt/icon"],
