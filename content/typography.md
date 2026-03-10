@@ -112,6 +112,96 @@ Use <kbd>Cmd</kbd> + <kbd>K</kbd> to open quick navigation.
 
 <TopicPalette></TopicPalette>
 
+## Article header combinations
+
+### Title only
+
+::article-header
+---
+title: "Article Header: Title only"
+---
+::
+
+### Date only
+
+::article-header
+---
+title: "Article Header: Date only"
+date: 2026-03-10
+---
+::
+
+### Icon only
+
+::article-header
+---
+title: "Article Header: Icon only"
+icon: streamline-ultimate-color:app-window-bookmark
+---
+::
+
+### Topics only
+
+::article-header
+---
+title: "Article Header: Topics only"
+topics:
+  - Vue
+  - Nuxt Content
+  - Tailwind
+---
+::
+
+### Date + icon
+
+::article-header
+---
+title: "Article Header: Date and icon"
+date: 2026-03-10
+icon: streamline-ultimate-color:app-window-bookmark
+---
+::
+
+### Date + topics
+
+::article-header
+---
+title: "Article Header: Date and topics"
+date: 2026-03-10
+topics:
+  - Architecture
+  - Refactoring
+---
+::
+
+### Icon + topics
+
+::article-header
+---
+title: "Article Header: Icon and topics"
+icon: streamline-ultimate-color:app-window-bookmark
+topics:
+  - Design Systems
+  - UI Components
+---
+::
+
+### Full metadata + multiline icon scaling
+
+::article-header
+---
+title: Article Header with all metadata and a longer title that wraps into multiple lines for icon scaling
+date: 2026-03-10
+icon: streamline-ultimate-color:app-window-bookmark
+topics:
+  - Nuxt
+  - Vue
+  - Content
+  - UI
+title-lines: 3
+---
+::
+
 ## External link card combinations
 
 ### URL only
