@@ -6,6 +6,7 @@ type: post
 icon: streamline-ultimate-color:app-window-bookmark
 titleLines: 2
 comments: true
+topics: build log, AI toolchain
 ---
 
 ::external-link-card

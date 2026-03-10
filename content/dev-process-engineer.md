@@ -6,6 +6,7 @@ type: post
 icon: streamline-ultimate-color:module-four
 titleLines: 2
 comments: true
+topics: management, AI
 ---
 
 There's no debate left about whether AI changed software development. It did. Every conference talk, every engineering blog, every Hacker News thread in 2025 acknowledges the shift. Some celebrate it, some mourn it, but nobody credibly claims that nothing happened.

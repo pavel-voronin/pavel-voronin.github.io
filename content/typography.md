@@ -108,6 +108,10 @@ Use <kbd>Cmd</kbd> + <kbd>K</kbd> to open quick navigation.
 
 <InlineBadge text="Markdown + Vue component still works"></InlineBadge>
 
+## Topic badge colors
+
+<TopicPalette></TopicPalette>
+
 ## External link card combinations
 
 ### URL only

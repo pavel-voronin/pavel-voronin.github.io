@@ -18,6 +18,14 @@
         <h1 class="articleHeading">
           {{ page?.title }}
         </h1>
+
+        <div v-if="topicTags.length > 0" class="articleTopics">
+          <TopicBadge
+            v-for="topic in topicTags"
+            :key="topic"
+            :topic="topic"
+          />
+        </div>
       </div>
     </template>
 
@@ -39,6 +47,26 @@ const { data: page } = await useAsyncData(`content-${slug}`, () => {
 
 const shouldShowComments = computed(() => {
   return page.value?.type === 'post' && page.value?.comments === true
+})
+
+const topicTags = computed(() => {
+  const topics = page.value?.topics
+
+  if (typeof topics === 'string') {
+    return topics
+      .split(',')
+      .map(topic => topic.trim())
+      .filter(Boolean)
+  }
+
+  if (Array.isArray(topics)) {
+    return topics
+      .filter((topic): topic is string => typeof topic === 'string')
+      .map(topic => topic.trim())
+      .filter(Boolean)
+  }
+
+  return []
 })
 
 if (!page.value) {
@@ -103,7 +131,8 @@ const formatPostDate = (value: string) => {
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-areas:
     ". date"
-    "icon title";
+    "icon title"
+    ". topics";
 }
 
 .articleDate {
@@ -165,5 +194,10 @@ const formatPostDate = (value: string) => {
 
 .articleBody {
   @apply text-lg leading-relaxed text-body;
+}
+
+.articleTopics {
+  grid-area: topics;
+  @apply mt-3 flex flex-wrap gap-2 text-xs;
 }
 </style>
