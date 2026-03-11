@@ -7,6 +7,7 @@
         :icon="page?.icon"
         :topics="topicTags"
         :title-lines="page?.titleLines"
+        :publication-links="publicationLinks"
       />
     </template>
 
@@ -28,6 +29,55 @@ const { data: page } = await useAsyncData(`content-${slug}`, () => {
 
 const shouldShowComments = computed(() => {
   return page.value?.type === 'post' && page.value?.comments === true
+})
+
+type PublicationLink = {
+  label: string
+  platform?: string
+  url: string
+}
+
+type SocialLinks = {
+  twitter?: string
+  hackerNews?: string
+  lobsters?: string
+  reddit?: string
+  linkedin?: string
+}
+
+const socialLinks = computed<SocialLinks>(() => {
+  const current = page.value as (SocialLinks | null | undefined)
+  return current ?? {}
+})
+
+const publicationLinks = computed<PublicationLink[]>(() => {
+  if (!page.value) {
+    return []
+  }
+
+  const links: PublicationLink[] = []
+
+  if (socialLinks.value.twitter) {
+    links.push({ label: 'On X', platform: 'x', url: socialLinks.value.twitter })
+  }
+
+  if (socialLinks.value.hackerNews) {
+    links.push({ label: 'On Hacker News', platform: 'hacker-news', url: socialLinks.value.hackerNews })
+  }
+
+  if (socialLinks.value.lobsters) {
+    links.push({ label: 'On Lobsters', platform: 'lobsters', url: socialLinks.value.lobsters })
+  }
+
+  if (socialLinks.value.reddit) {
+    links.push({ label: 'On Reddit', platform: 'reddit', url: socialLinks.value.reddit })
+  }
+
+  if (socialLinks.value.linkedin) {
+    links.push({ label: 'On LinkedIn', platform: 'linkedin', url: socialLinks.value.linkedin })
+  }
+
+  return links
 })
 
 const topicTags = computed(() => {

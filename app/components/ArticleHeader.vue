@@ -4,10 +4,27 @@
       <Icon :name="props.icon" />
     </div>
 
-    <p v-if="formattedDate" class="articleDate">
-      {{ formattedDate }}
-    </p>
+    <div v-if="hasMetaRow" class="articleMeta">
+      <p v-if="formattedDate" class="articleDate">
+        {{ formattedDate }}
+      </p>
 
+      <div v-if="normalizedPublicationLinks.length > 0" class="articleExternalLinks">
+        <a
+          v-for="(link, index) in normalizedPublicationLinks"
+          :key="`${link.url}-${index}`"
+          class="articlePlatformLink"
+          :data-platform="link.platform"
+          :href="link.url"
+          :title="link.label"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <HackerNewsIcon v-if="link.platform === 'hacker-news'" />
+          <Icon v-else-if="link.iconName" :name="link.iconName" />
+        </a>
+      </div>
+    </div>
     <div v-if="props.icon" class="articleIcon">
       <Icon :name="props.icon" />
     </div>
@@ -33,6 +50,11 @@ const props = defineProps<{
   icon?: string
   topics?: string[]
   titleLines?: number
+  publicationLinks?: Array<{
+    label: string
+    platform?: string
+    url: string
+  }>
 }>()
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
@@ -53,6 +75,37 @@ const normalizedTopics = computed(() => {
   return (props.topics ?? [])
     .map(topic => topic.trim())
     .filter(Boolean)
+})
+
+const normalizedPublicationLinks = computed(() => {
+  const iconByPlatform: Record<string, string> = {
+    x: 'simple-icons:x',
+    twitter: 'simple-icons:x',
+    'hacker-news': '',
+    lobsters: 'simple-icons:lobsters',
+    reddit: 'simple-icons:reddit',
+    linkedin: 'simple-icons:linkedin',
+  }
+
+  return (props.publicationLinks ?? [])
+    .filter(link => Boolean(link.url))
+    .map(link => {
+      const normalizedLabel = link.label.trim()
+      const normalizedPlatform = link.platform?.trim().toLowerCase()
+      const normalizedIcon = iconByPlatform[normalizedPlatform || '']
+
+      return {
+        label: normalizedLabel,
+        platform: normalizedPlatform || 'default',
+        iconName: normalizedIcon,
+        url: link.url,
+      }
+    })
+    .filter(link => Boolean(link.label && (link.platform === 'hacker-news' || link.iconName)))
+})
+
+const hasMetaRow = computed(() => {
+  return Boolean(formattedDate.value || normalizedPublicationLinks.value.length > 0)
 })
 
 const normalizedTitleLines = computed(() => {
@@ -88,14 +141,52 @@ const headerInlineStyle = computed(() => {
   @apply grid gap-x-3;
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-areas:
-    ". date"
+    ". meta"
     "icon title"
     ". topics";
 }
 
+.articleMeta {
+  grid-area: meta;
+  @apply m-0 mt-3 flex min-h-4 flex-wrap items-center gap-x-3 gap-y-1 leading-none;
+}
+
 .articleDate {
-  grid-area: date;
-  @apply m-0 mt-3 tracking-wide text-faint;
+  @apply m-0 text-base leading-none tracking-wide text-faint;
+}
+
+.articleExternalLinks {
+  @apply ml-auto flex items-center gap-2 leading-none;
+}
+
+.articlePlatformLink {
+  @apply inline-flex items-center leading-none no-underline text-subtle transition-colors hover:text-body;
+}
+
+.articlePlatformLink :deep(.iconify),
+.articlePlatformLink :deep(.nuxt-icon),
+.articlePlatformLink :deep(svg) {
+  @apply block size-4;
+}
+
+.articlePlatformLink[data-platform="x"] {
+  @apply text-black hover:text-zinc-700;
+}
+
+.articlePlatformLink[data-platform="hacker-news"] {
+  @apply text-orange-600 hover:text-orange-500;
+}
+
+.articlePlatformLink[data-platform="lobsters"] {
+  @apply text-rose-600 hover:text-rose-500;
+}
+
+.articlePlatformLink[data-platform="reddit"] {
+  @apply text-orange-600 hover:text-orange-500;
+}
+
+.articlePlatformLink[data-platform="linkedin"] {
+  @apply text-blue-700 hover:text-blue-600;
 }
 
 .articleIcon {

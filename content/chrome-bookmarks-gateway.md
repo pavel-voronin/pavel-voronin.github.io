@@ -7,6 +7,7 @@ icon: streamline-ultimate-color:app-window-bookmark
 titleLines: 2
 comments: true
 topics: build log, AI toolchain
+twitter: https://x.com/pavel_voronin/status/2031630936748732545
 ---
 
 ::external-link-card
