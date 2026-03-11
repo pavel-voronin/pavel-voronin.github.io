@@ -1,14 +1,8 @@
 <template>
   <PageSection>
     <template #header>
-      <ArticleHeader
-        :title="page?.title ?? ''"
-        :date="page?.date"
-        :icon="page?.icon"
-        :topics="topicTags"
-        :title-lines="page?.titleLines"
-        :publication-links="publicationLinks"
-      />
+      <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :icon="page?.icon" :topics="topicTags"
+        :title-lines="page?.titleLines" :publication-links="publicationLinks" />
     </template>
 
     <ContentRenderer v-if="page" class="articleBody" :value="page" />
@@ -124,15 +118,21 @@ const articleFavicon = (() => {
   return toIconifySvgUrl(page.value.icon)
 })()
 
+const fallbackFavicon = '/favicon.svg'
+const baseFaviconHref = articleFavicon ?? fallbackFavicon
+const { faviconHref } = useReadingProgressFavicon({
+  baseFaviconHref,
+})
+
 useHead(() => {
   const head = {
     title: page.value?.title ?? 'Pavel Voronin',
   }
 
-  if (articleFavicon) {
+  if (baseFaviconHref) {
     return {
       ...head,
-      link: [{ key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: articleFavicon }],
+      link: [{ key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: faviconHref.value }],
     }
   }
 
