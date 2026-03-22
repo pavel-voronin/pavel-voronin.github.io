@@ -2,7 +2,7 @@
 title: Your Development Process Is Now a Full-Time Engineering Problem
 description: no
 date: 2026-02-04
-type: post
+publish-to: all
 icon: streamline-ultimate-color:module-four
 titleLines: 2
 comments: true

@@ -7,7 +7,7 @@ export default defineContentConfig({
       type: "page",
       source: "**/*.md",
       schema: z.object({
-        type: z.string().optional(),
+        "publish-to": z.enum(["blog", "topics", "all"]).optional(),
         date: z.string().optional(),
         icon: z.string().optional(),
         comments: z.boolean().optional(),

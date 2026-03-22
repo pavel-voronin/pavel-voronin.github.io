@@ -18,8 +18,8 @@ useHead({
 
 const { data: posts } = await useAsyncData('all-posts', () => {
   return queryCollection('content')
-    .where('type', '=', 'post')
     .order('date', 'DESC')
     .all()
+    .then(items => items.filter(isPublishedToBlock))
 })
 </script>

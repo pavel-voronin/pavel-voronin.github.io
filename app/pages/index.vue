@@ -17,10 +17,9 @@
 <script setup lang="ts">
 const { data: latestPosts } = await useAsyncData('latest-posts', () => {
   return queryCollection('content')
-    .where('type', '=', 'post')
     .order('date', 'DESC')
-    .limit(5)
     .all()
+    .then(posts => posts.filter(isPublishedToBlock).slice(0, 5))
 })
 </script>
 

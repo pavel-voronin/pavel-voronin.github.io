@@ -40,11 +40,14 @@ const { data: topicPosts } = await useAsyncData(
     }
 
     const posts = await queryCollection('content')
-      .where('type', '=', 'post')
       .order('date', 'DESC')
       .all()
 
     return posts.filter((post) => {
+      if (!isPublishedToTopics(post)) {
+        return false
+      }
+
       const topics = typeof post.topics === 'string'
         ? post.topics.split(',').map(item => item.trim()).filter(Boolean)
         : Array.isArray(post.topics)

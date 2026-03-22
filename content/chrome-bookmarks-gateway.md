@@ -2,7 +2,7 @@
 title: How I Gave My Agent Live Access to Chrome Bookmarks
 description: no
 date: 2026-03-09
-type: post
+publish-to: all
 icon: streamline-ultimate-color:app-window-bookmark
 titleLines: 2
 comments: true

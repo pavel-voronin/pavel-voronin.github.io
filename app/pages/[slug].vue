@@ -22,7 +22,7 @@ const { data: page } = await useAsyncData(`content-${slug}`, () => {
 })
 
 const shouldShowComments = computed(() => {
-  return page.value?.type === 'post' && page.value?.comments === true
+  return isPublishedToBlock(page.value) && page.value?.comments === true
 })
 
 type PublicationLink = {
@@ -111,7 +111,7 @@ const toIconifySvgUrl = (iconName: string) => {
 }
 
 const articleFavicon = (() => {
-  if (page.value?.type !== 'post' || !page.value?.icon) {
+  if (!page.value?.icon) {
     return null
   }
 
