@@ -35,6 +35,14 @@ Go to [https://openrouter.ai/keys](https://openrouter.ai/keys)
 - Optionally set a usage limit and expiration
 - Submit form and **copy the key immediately**. It will not be shown again
 
+Your key will look like this:
+
+```text
+sk-or-v1-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+Copy the **entire** key, from `sk-or-v1-` to the last character.
+
 ## Quick Test
 
 You can test your key with a simple request (`$OPENROUTER_API_KEY` is your key):
