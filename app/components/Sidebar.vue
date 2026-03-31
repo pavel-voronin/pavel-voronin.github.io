@@ -31,6 +31,14 @@
             About
           </AppLink>
         </li>
+        <li>
+          <AppLink to="/now" silent class="linkRow">
+            <template #left>
+              <Icon name="streamline-ultimate-color:lab-flask-experiment" />
+            </template>
+            Now
+          </AppLink>
+        </li>
       </ul>
     </nav>
 
@@ -50,19 +58,19 @@
           </AppLink>
         </li>
         <li>
-          <AppLink href="https://x.com/pavel_voronin" target="_blank" silent no-visited class="linkRow">
-            <template #left>
-              <Icon name="logos:twitter" />
-            </template>
-            Twitter / X
-          </AppLink>
-        </li>
-        <li>
           <AppLink href="https://www.linkedin.com/in/pavelvoronin/" target="_blank" silent no-visited class="linkRow">
             <template #left>
               <Icon name="streamline-ultimate-color:linkedin-logo" />
             </template>
             LinkedIn
+          </AppLink>
+        </li>
+        <li>
+          <AppLink href="https://x.com/pavel_voronin" target="_blank" silent no-visited class="linkRow">
+            <template #left>
+              <Icon name="logos:twitter" />
+            </template>
+            Twitter / X
           </AppLink>
         </li>
       </ul>
