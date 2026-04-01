@@ -1,7 +1,7 @@
 <template>
   <PageSection>
     <template #header>
-      <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :icon="page?.icon" :topics="topicTags"
+      <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :date-updated="page?.date_updated" :icon="page?.icon" :topics="topicTags"
         :title-lines="page?.titleLines" :publication-links="publicationLinks" />
     </template>
 

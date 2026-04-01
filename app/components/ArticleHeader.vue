@@ -47,6 +47,7 @@
 const props = defineProps<{
   title: string
   date?: string
+  dateUpdated?: string
   icon?: string
   topics?: string[]
   titleLines?: number
@@ -64,6 +65,10 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 })
 
 const formattedDate = computed(() => {
+  if (props.dateUpdated) {
+    return `${dateFormatter.format(new Date(props.dateUpdated))} (updated)`
+  }
+
   if (!props.date) {
     return null
   }

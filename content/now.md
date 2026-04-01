@@ -1,6 +1,8 @@
 ---
 title: Now
 description: What I'm focused on now
+date: 2026-04-01
+date_updated: 2026-04-01
 icon: streamline-ultimate-color:lab-flask-experiment
 ---
 
