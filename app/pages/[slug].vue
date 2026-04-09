@@ -2,7 +2,7 @@
   <PageSection>
     <template #header>
       <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :date-updated="page?.date_updated" :icon="page?.icon" :topics="topicTags"
-        :title-lines="page?.titleLines" :publication-links="publicationLinks" />
+        :title-lines="titleLines" :publication-links="publicationLinks" />
     </template>
 
     <ContentRenderer v-if="page" class="articleBody" :value="page" />
@@ -92,6 +92,17 @@ const topicTags = computed(() => {
   }
 
   return []
+})
+
+const titleLines = computed(() => {
+  const rawValue = page.value?.titleLines
+  const parsedValue = typeof rawValue === 'string' ? Number.parseInt(rawValue, 10) : rawValue
+
+  if (typeof parsedValue !== 'number' || Number.isNaN(parsedValue)) {
+    return 1
+  }
+
+  return Math.min(6, Math.max(1, parsedValue))
 })
 
 if (!page.value) {
