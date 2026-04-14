@@ -2,13 +2,15 @@
 title: Now
 description: What I'm focused on now
 date: 2026-04-01
-date_updated: 2026-04-01
+date_updated: 2026-04-14
 icon: streamline-ultimate-color:lab-flask-experiment
 ---
 
 This is a [now page](https://nownownow.com/about): a snapshot of what I'm focused on at this point in life, not a full bio.
 
 I'm mostly working at the intersection of AI tooling, agent workflows, and practical consulting. I also write articles, many of which will soon land on this blog. And I should do more networking. If you want to reach out, the contact links are in the sidebar.
+
+I'm also embedding Linux into HTML to show a demo of my new console utility.
 
 ## Main Focus
 
