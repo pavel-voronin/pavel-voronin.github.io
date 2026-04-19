@@ -9,6 +9,7 @@
 
 @theme {
   --font-sans: Inter, "sans-serif";
+  --font-terminal: "BlexMono Nerd Font Mono", "PT Mono", monospace;
 
   /* Breakpoints */
   --breakpoint-sidenav: 60rem;

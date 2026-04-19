@@ -135,8 +135,11 @@ export default defineNuxtConfig({
       },
     },
   },
-  css: ["~/assets/css/main.css"],
+  css: ["@embedos/vue/style.css", "~/assets/css/main.css"],
   vite: {
+    optimizeDeps: {
+      exclude: ["@embedos/debian-bullseye-busybox-runtime"],
+    },
     plugins: [tailwindcss() as any],
   },
   hooks: {
