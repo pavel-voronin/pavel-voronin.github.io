@@ -15,6 +15,9 @@
             :auto-fetch="false"
             :config="runtimeConfig"
             :terminal="terminalOptions"
+            @error="handleTerminalError"
+            @ready="handleTerminalReady"
+            @resize="handleTerminalResize"
           >
             <template #invite="{ launch, theme }">
               <EmbedosLaunchOverlay
@@ -155,6 +158,30 @@ const terminalOptions = computed(() => ({
     white: "#dfffea",
   },
 }))
+
+function logTerminalEvent(event: string, details?: Record<string, unknown>) {
+  if (!import.meta.dev) {
+    return
+  }
+
+  console.debug("[vue-fake-linux]", event, details ?? {})
+}
+
+function handleTerminalReady() {
+  logTerminalEvent("ready", {
+    isolated: window.crossOriginIsolated,
+  })
+}
+
+function handleTerminalError(error: Error) {
+  logTerminalEvent("error", {
+    message: error.message,
+  })
+}
+
+function handleTerminalResize(size: { cols: number; rows: number }) {
+  logTerminalEvent("resize", size)
+}
 
 function resolveLaunchTheme(
   theme: { background?: string | null; foreground?: string | null } | null | undefined,
