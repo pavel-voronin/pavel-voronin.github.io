@@ -13,6 +13,7 @@
           <EmbedosTerminal
             v-else
             :auto-fetch="false"
+            :reset-overlay-on-start="false"
             :config="runtimeConfig"
             :terminal="terminalOptions"
             @error="handleTerminalError"
