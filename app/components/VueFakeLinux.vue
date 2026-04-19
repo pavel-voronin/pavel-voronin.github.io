@@ -160,28 +160,13 @@ const terminalOptions = computed(() => ({
   },
 }))
 
-function logTerminalEvent(event: string, details?: Record<string, unknown>) {
-  if (!import.meta.dev) {
-    return
-  }
-
-  console.debug("[vue-fake-linux]", event, details ?? {})
-}
-
 function handleTerminalReady() {
-  logTerminalEvent("ready", {
-    isolated: window.crossOriginIsolated,
-  })
 }
 
 function handleTerminalError(error: Error) {
-  logTerminalEvent("error", {
-    message: error.message,
-  })
 }
 
 function handleTerminalResize(size: { cols: number; rows: number }) {
-  logTerminalEvent("resize", size)
 }
 
 function resolveLaunchTheme(

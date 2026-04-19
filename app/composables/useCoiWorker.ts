@@ -35,14 +35,6 @@ export function useCoiWorker() {
     const scriptUrl = getWorkerUrl()
     const scope = getScope()
 
-    if (import.meta.dev) {
-      console.debug("[coi]", "init", {
-        scope,
-        scriptUrl,
-        isolated: window.crossOriginIsolated,
-      })
-    }
-
     if (window.crossOriginIsolated) {
       window.sessionStorage.removeItem(reloadFlagKey)
     }
@@ -59,42 +51,17 @@ export function useCoiWorker() {
       void navigator.serviceWorker
         .register(scriptUrl, { scope })
         .then(async () => {
-          if (import.meta.dev) {
-            console.debug("[coi]", "registered", {
-              scope,
-              scriptUrl,
-            })
-          }
-
           await navigator.serviceWorker.ready
 
           if (window.crossOriginIsolated || window.sessionStorage.getItem(reloadFlagKey) === "1") {
-            if (import.meta.dev) {
-              console.debug("[coi]", "skip-reload", {
-                isolated: window.crossOriginIsolated,
-                reloadFlag: window.sessionStorage.getItem(reloadFlagKey),
-              })
-            }
             return
           }
 
-          if (import.meta.dev) {
-            console.debug("[coi]", "reload", {
-              scope,
-              scriptUrl,
-            })
-          }
           window.sessionStorage.setItem(reloadFlagKey, "1")
           window.location.reload()
         })
         .catch((error) => {
-          if (import.meta.dev) {
-            console.debug("[coi]", "register-failed", {
-              scope,
-              scriptUrl,
-              message: error instanceof Error ? error.message : String(error),
-            })
-          }
+          void error
         })
     }
 
@@ -112,13 +79,6 @@ export function useCoiWorker() {
 
         if ((activeScopes.get(scope) ?? 0) !== 0) {
           return
-        }
-
-        if (import.meta.dev) {
-          console.debug("[coi]", "unregister", {
-            scope,
-            scriptUrl,
-          })
         }
 
         void unregisterWorkerRegistration(scope, scriptUrl).catch(() => {})
