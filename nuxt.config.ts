@@ -4,6 +4,10 @@ import { extname, relative, resolve, sep } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 
 const CONTENT_DIRECTORY = resolve(process.cwd(), "content");
+const CONTENT_PRERENDER_ROUTE_PATHS = getContentMarkdownFiles(CONTENT_DIRECTORY).map((file) => {
+  const relativePath = relative(CONTENT_DIRECTORY, file);
+  return toContentRoutePath(relativePath);
+});
 
 function getContentVueFiles(rootDir: string): string[] {
   const stack = [rootDir];
@@ -33,6 +37,38 @@ function getContentVueFiles(rootDir: string): string[] {
   return files;
 }
 
+function getContentMarkdownFiles(rootDir: string): string[] {
+  const stack = [rootDir];
+  const files: string[] = [];
+
+  while (stack.length > 0) {
+    const currentDirectory = stack.pop();
+    if (!currentDirectory) {
+      continue;
+    }
+
+    const entries = readdirSync(currentDirectory, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = `${currentDirectory}/${entry.name}`;
+
+      if (entry.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+
+      if (!entry.isFile()) {
+        continue;
+      }
+
+      if (extname(entry.name) === ".md" || extname(entry.name) === ".mdc") {
+        files.push(fullPath);
+      }
+    }
+  }
+
+  return files;
+}
+
 function convertSegmentToRoute(segment: string): string {
   const optionalMatch = segment.match(/^\[\[(.+)\]\]$/);
   if (optionalMatch) {
@@ -52,9 +88,9 @@ function convertSegmentToRoute(segment: string): string {
   return segment;
 }
 
-function toRoutePath(contentRelativePath: string): string {
+function toContentRoutePath(contentRelativePath: string): string {
   const normalizedPath = contentRelativePath.replaceAll(sep, "/");
-  const withoutExtension = normalizedPath.replace(/\.vue$/, "");
+  const withoutExtension = normalizedPath.replace(/\.(md|mdc|vue)$/, "");
   const rawSegments = withoutExtension.split("/");
   const lastIndex = rawSegments.length - 1;
 
@@ -136,6 +172,11 @@ export default defineNuxtConfig({
     },
   },
   css: ["@embedos/vue/style.css", "~/assets/css/main.css"],
+  nitro: {
+    prerender: {
+      routes: CONTENT_PRERENDER_ROUTE_PATHS,
+    },
+  },
   vite: {
     optimizeDeps: {
       exclude: ["@embedos/debian-bullseye-busybox-runtime"],
@@ -149,7 +190,7 @@ export default defineNuxtConfig({
 
       for (const file of contentVueFiles) {
         const relativePath = relative(CONTENT_DIRECTORY, file);
-        const path = toRoutePath(relativePath);
+        const path = toContentRoutePath(relativePath);
 
         if (existingPaths.has(path)) {
           continue;
