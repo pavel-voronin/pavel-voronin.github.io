@@ -6,25 +6,11 @@
           <span ref="probeCharRef" class="terminalProbeChar">00000000000000000000000000000000</span>
         </div>
         <ClientOnly>
-          <EmbedosInitializingOverlay
-            v-if="!isCrossOriginIsolated"
-            :theme="initializingTheme"
-          />
-          <EmbedosTerminal
-            v-else
-            :auto-start="false"
-            :reset-overlay-on-start="false"
-            :config="runtimeConfig"
-            :terminal="terminalOptions"
-            @error="handleTerminalError"
-            @ready="handleTerminalReady"
-            @resize="handleTerminalResize"
-          >
+          <EmbedosInitializingOverlay v-if="!isCrossOriginIsolated" :theme="initializingTheme" />
+          <EmbedosTerminal v-else :auto-start="false" :config="runtimeConfig" :terminal="terminalOptions"
+            @error="handleTerminalError" @ready="handleTerminalReady" @resize="handleTerminalResize">
             <template #invite="{ launch, theme }">
-              <EmbedosLaunchOverlay
-                :theme="resolveLaunchTheme(theme)"
-                @launch="launch"
-              />
+              <EmbedosLaunchOverlay :theme="resolveLaunchTheme(theme)" @launch="launch" />
             </template>
             <template #initializing="{ theme }">
               <EmbedosInitializingOverlay :theme="theme" />
@@ -43,11 +29,87 @@ import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import EmbedosInitializingOverlay from "~/components/EmbedosInitializingOverlay.vue"
 import EmbedosLaunchOverlay from "~/components/EmbedosLaunchOverlay.vue"
 
-const runtimeConfig = defineRecipe(debianBullseyeBusyboxRuntime, (base) => ({
-  ...base,
-  run: ["printf 'hello world\\n'; exec /bin/sh -i"],
-  shell: ["/bin/sh", "-lc"],
-}))
+const props = withDefaults(defineProps<{
+  files?: FileInput[]
+  run?: string[]
+}>(), {
+  files: () => [],
+  run: () => ["export PS1='\\w # '; exec /bin/bash --noprofile --norc -i"],
+})
+
+type FileInput = {
+  content?: string
+  executable?: boolean
+  mode?: string | null
+  path: string
+  url?: string
+}
+
+type InlineOverlayFile = {
+  contents: string
+  executable?: boolean
+  mode?: string | null
+  path: string
+}
+
+type SourceOverlayFile = {
+  executable?: boolean
+  mode?: string | null
+  path: string
+  source: {
+    kind: "url"
+    url: string
+  }
+}
+
+type OverlayFile = InlineOverlayFile | SourceOverlayFile
+
+const fileOverlayLayer = computed<OverlayFile[]>(() =>
+  props.files
+    .map(normalizeOverlayFile)
+    .filter((file): file is OverlayFile => file !== null),
+)
+
+function normalizeOverlayFile(file: FileInput): InlineOverlayFile | SourceOverlayFile | null {
+  const path = file.path.trim()
+  const contents = typeof file.content === "string" ? file.content.trimEnd() : null
+  const url = typeof file.url === "string" ? file.url.trim() : ""
+  const mode = typeof file.mode === "string" && file.mode.trim().length > 0 ? file.mode.trim() : null
+
+  if (!path || (!contents && !url)) {
+    return null
+  }
+
+  if (contents) {
+    return {
+      contents,
+      executable: file.executable,
+      mode,
+      path,
+    }
+  }
+
+  return {
+    executable: file.executable,
+    mode,
+    path,
+    source: {
+      kind: "url",
+      url,
+    },
+  }
+}
+
+const runtimeConfig = computed(() =>
+  defineRecipe(debianBullseyeBusyboxRuntime, (base) => ({
+    ...base,
+    overlayFiles: [
+      ...base.overlayFiles,
+      ...(fileOverlayLayer.value.length > 0 ? [fileOverlayLayer.value] : []),
+    ],
+    run: props.run,
+  })),
+)
 
 useCoiWorker()
 
