@@ -45,7 +45,7 @@ import EmbedosLaunchOverlay from "~/components/EmbedosLaunchOverlay.vue"
 
 const runtimeConfig = defineRecipe(debianBullseyeBusyboxRuntime, (base) => ({
   ...base,
-  run: ["printf 'hello world\\n'", "exec /bin/bash -i"],
+  run: ["printf 'hello world\\n'; exec /bin/sh -i"],
   shell: ["/bin/sh", "-lc"],
 }))
 
