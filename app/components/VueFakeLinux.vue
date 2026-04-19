@@ -10,14 +10,9 @@
             v-if="!isCrossOriginIsolated"
             :theme="initializingTheme"
           />
-          <EmbedosLaunchOverlay
-            v-else-if="!isTerminalMounted"
-            :theme="launchTheme"
-            @launch="handleLaunch"
-          />
           <EmbedosTerminal
             v-else
-            :auto-fetch="true"
+            :auto-fetch="false"
             :reset-overlay-on-start="false"
             :config="runtimeConfig"
             :terminal="terminalOptions"
@@ -25,6 +20,12 @@
             @ready="handleTerminalReady"
             @resize="handleTerminalResize"
           >
+            <template #invite="{ launch, theme }">
+              <EmbedosLaunchOverlay
+                :theme="resolveLaunchTheme(theme)"
+                @launch="launch"
+              />
+            </template>
             <template #initializing="{ theme }">
               <EmbedosInitializingOverlay :theme="theme" />
             </template>
@@ -54,17 +55,11 @@ const shellRef = ref<HTMLElement | null>(null)
 const probeCharRef = ref<HTMLElement | null>(null)
 const terminalFontSize = ref(12)
 const isCrossOriginIsolated = ref(false)
-const isTerminalMounted = ref(false)
 let resizeObserver: ResizeObserver | null = null
 let measureFrame = 0
 let windowResizeHandler: (() => void) | null = null
 
 const initializingTheme = {
-  background: "#07120b",
-  foreground: "#b7ffcf",
-}
-
-const launchTheme = {
   background: "#07120b",
   foreground: "#b7ffcf",
 }
@@ -189,8 +184,16 @@ function handleTerminalResize(size: { cols: number; rows: number }) {
   logTerminalEvent("resize", size)
 }
 
-function handleLaunch() {
-  isTerminalMounted.value = true
+function resolveLaunchTheme(
+  theme: { background?: string | null; foreground?: string | null } | null | undefined,
+): {
+  background: string
+  foreground: string
+} {
+  return {
+    background: theme?.background ?? "#07120b",
+    foreground: theme?.foreground ?? "#b7ffcf",
+  }
 }
 
 onMounted(() => {
