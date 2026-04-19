@@ -12,7 +12,7 @@
           />
           <EmbedosTerminal
             v-else
-            :auto-fetch="false"
+            :auto-start="false"
             :reset-overlay-on-start="false"
             :config="runtimeConfig"
             :terminal="terminalOptions"
