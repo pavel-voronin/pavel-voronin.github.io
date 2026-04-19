@@ -6,7 +6,9 @@ const reloadFlagKey = "embedos-coi-reloaded"
 
 function getWorkerUrl(): string {
   const { app } = useRuntimeConfig()
-  return new URL(joinURL(app.baseURL, "coi-serviceworker.min.js"), window.location.origin).href
+  const workerUrl = new URL(joinURL(app.baseURL, "coi-serviceworker.min.js"), window.location.origin)
+  workerUrl.searchParams.set("v", app.buildId)
+  return workerUrl.href
 }
 
 function getScope(): string {
