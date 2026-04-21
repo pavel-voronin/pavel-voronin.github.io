@@ -61,7 +61,7 @@ const formatPostDate = (value: string) => {
 }
 
 .postItem {
-  @apply grid items-start gap-x-4 gap-y-0;
+  @apply grid items-start gap-x-0 gap-y-0;
   grid-template-columns: 4rem minmax(0, 1fr);
 }
 
@@ -74,7 +74,7 @@ const formatPostDate = (value: string) => {
 }
 
 .postTitle {
-  @apply block min-w-0 flex-1 whitespace-normal break-words;
+  @apply block min-w-0 flex-1 whitespace-normal wrap-break-word;
 }
 
 .postLink :deep(.icon) {
@@ -82,10 +82,10 @@ const formatPostDate = (value: string) => {
 }
 
 .postDateSlot {
-  @apply flex justify-center pt-[0.48em];
+  @apply flex justify-start pt-[0.36em];
 }
 
 .postDate {
-  @apply block whitespace-nowrap text-center text-xs uppercase tracking-widest text-caption leading-none;
+  @apply block whitespace-nowrap text-left text-xs uppercase tracking-widest text-caption leading-none;
 }
 </style>

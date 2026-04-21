@@ -31,7 +31,7 @@
 @reference "~/assets/css/main.css";
 
 .topBar {
-  @apply fixed top-0 left-0 right-0 h-14 z-50 flex items-center gap-6 px-6 bg-surface border-b border-edge/70;
+  @apply fixed top-0 left-0 right-0 h-14 z-50 flex items-center gap-3 px-4 bg-surface border-b border-edge/70;
 }
 
 @variant sidenav {
@@ -41,19 +41,19 @@
 }
 
 .brand {
-  @apply text-lg font-semibold tracking-tight text-heading no-underline;
+  @apply text-lg font-semibold tracking-tight text-heading no-underline whitespace-nowrap;
 }
 
 .nav {
-  @apply ml-auto flex items-center gap-1;
+  @apply ml-auto flex items-center gap-0.5;
 }
 
 .navLink {
-  @apply flex items-center gap-1.5 rounded px-3 py-1.5 text-sm text-subtle no-underline transition hover:bg-accent-surface/70 hover:text-heading;
+  @apply flex items-center gap-1 rounded px-2 py-1.5 text-sm text-subtle no-underline transition hover:bg-accent-surface/70 hover:text-heading;
 }
 
 .socials {
-  @apply flex items-center gap-3;
+  @apply flex items-center gap-2;
 }
 
 .socialLink {
