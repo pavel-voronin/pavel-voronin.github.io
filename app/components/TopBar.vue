@@ -3,7 +3,7 @@
     <AppLink to="/" silent class="brand">Pavel Voronin</AppLink>
 
     <nav class="nav">
-      <AppLink to="/posts" silent class="navLink">
+      <AppLink to="/blog" silent class="navLink">
         <Icon name="streamline-ultimate-color:notes-paper-text" />
         Blog
       </AppLink>

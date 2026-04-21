@@ -5,7 +5,7 @@
     <PageSection>
       <template #header>
         <HomeSectionHeading>
-          <AppLink to="/posts" silent>Blog</AppLink>
+          <AppLink to="/blog" silent>Blog</AppLink>
         </HomeSectionHeading>
       </template>
 

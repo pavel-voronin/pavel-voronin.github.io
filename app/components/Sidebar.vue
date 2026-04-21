@@ -16,7 +16,7 @@
     <nav>
       <ul class="linkList">
         <li>
-          <AppLink to="/posts" silent class="linkRow">
+          <AppLink to="/blog" silent class="linkRow">
             <template #left>
               <Icon name="streamline-ultimate-color:notes-paper-text" />
             </template>
