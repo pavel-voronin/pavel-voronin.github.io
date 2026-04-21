@@ -12,7 +12,7 @@
         </p>
         <AppButton to="/me" class="self-start">
           <template #left>
-            <Icon name="streamline-ultimate-color:smiley-happy" />
+            <Icon name="streamline-ultimate-color:user-question" />
           </template>
           About me
         </AppButton>

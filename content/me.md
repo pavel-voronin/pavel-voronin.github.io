@@ -1,6 +1,6 @@
 ---
 title: About Me
-icon: streamline-ultimate-color:smiley-happy
+icon: streamline-ultimate-color:user-question
 ---
 
 I'm Pavel Voronin.

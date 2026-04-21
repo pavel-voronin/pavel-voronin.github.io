@@ -8,7 +8,7 @@
         Blog
       </AppLink>
       <AppLink to="/me" silent class="navLink">
-        <Icon name="streamline-ultimate-color:smiley-happy" />
+        <Icon name="streamline-ultimate-color:user-question" />
         About
       </AppLink>
     </nav>

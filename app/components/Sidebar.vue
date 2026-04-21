@@ -26,7 +26,7 @@
         <li>
           <AppLink to="/me" silent class="linkRow">
             <template #left>
-              <Icon name="streamline-ultimate-color:smiley-happy" />
+              <Icon name="streamline-ultimate-color:user-question" />
             </template>
             About
           </AppLink>
