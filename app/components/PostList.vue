@@ -70,7 +70,7 @@ const formatPostDate = (value: string) => {
 }
 
 .postLink {
-  @apply inline-flex min-w-0 items-start gap-1.5;
+  @apply inline-flex min-w-0 items-start justify-self-start gap-1.5;
 }
 
 .postTitle {

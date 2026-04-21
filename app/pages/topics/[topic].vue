@@ -1,12 +1,13 @@
 <template>
   <PageSection>
     <template #header>
-      <ArticleHeading>
+      <PageHeader>
         <span class="headingInline">
+          <Icon name="streamline-ultimate-color:tags-1" />
           <span class="headingLabel">Topic</span>
           <TopicBadge :topic="topic" />
         </span>
-      </ArticleHeading>
+      </PageHeader>
     </template>
     <template #lead>Posts tagged with this topic.</template>
 
@@ -69,6 +70,12 @@ const { data: topicPosts } = await useAsyncData(
 
 useHead({
   title: topic ? `Topic: ${topic}` : 'Topics',
+  link: [{
+    key: 'site-favicon',
+    rel: 'icon',
+    type: 'image/svg+xml',
+    href: 'https://api.iconify.design/streamline-ultimate-color/tags-1.svg',
+  }],
 })
 </script>
 
