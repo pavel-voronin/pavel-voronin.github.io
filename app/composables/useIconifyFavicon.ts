@@ -1,45 +1,37 @@
-import { getIconData, iconToSVG } from "@iconify/utils";
-import { icons as logosIcons } from "@iconify-json/logos";
-import { icons as simpleIconsIcons } from "@iconify-json/simple-icons";
-import { icons as streamlineUltimateColorIcons } from "@iconify-json/streamline-ultimate-color";
+import { addIcon, getIcon } from '@iconify/vue'
+import { iconToHTML, iconToSVG, svgToData } from '@iconify/utils'
+import { init as initClientBundle } from '#build/nuxt-icon-client-bundle'
 
-const iconCollections = {
-  logos: logosIcons,
-  "simple-icons": simpleIconsIcons,
-  "streamline-ultimate-color": streamlineUltimateColorIcons,
-} as const;
+const faviconCache = new Map<string, string>()
 
-const escapeAttribute = (value: string) => {
-  return value.replaceAll("&", "&amp;").replaceAll("\"", "&quot;");
-};
+const ensureClientBundle = () => {
+  initClientBundle(addIcon)
+}
 
-const toSvgDataUri = (svgMarkup: string) => {
-  return `data:image/svg+xml,${encodeURIComponent(svgMarkup)}`;
-};
+const iconToDataUri = (iconName: string) => {
+  const cached = faviconCache.get(iconName)
 
-export const createIconifyFaviconHref = (iconName: string, fallbackHref = "/favicon.svg") => {
-  const [collectionName, ...iconParts] = iconName.split(":");
-
-  if (!collectionName || iconParts.length === 0) {
-    return fallbackHref;
+  if (cached) {
+    return cached
   }
 
-  const collection = iconCollections[collectionName as keyof typeof iconCollections];
-  if (!collection) {
-    return fallbackHref;
+  ensureClientBundle()
+
+  const icon = getIcon(iconName)
+
+  if (!icon) {
+    return null
   }
 
-  const icon = iconParts.join(":");
-  const iconData = getIconData(collection, icon);
+  const { body, attributes } = iconToSVG(icon)
+  const svg = iconToHTML(body, attributes)
+  const dataUri = svgToData(svg)
 
-  if (!iconData) {
-    return fallbackHref;
-  }
+  faviconCache.set(iconName, dataUri)
 
-  const svg = iconToSVG(iconData);
-  const attributes = Object.entries(svg.attributes)
-    .map(([key, value]) => `${key}="${escapeAttribute(String(value))}"`)
-    .join(" ");
+  return dataUri
+}
 
-  return toSvgDataUri(`<svg xmlns="http://www.w3.org/2000/svg" ${attributes}>${svg.body}</svg>`);
-};
+export const createIconifyFaviconHref = (iconName: string, fallbackHref = '/favicon.svg') => {
+  return iconToDataUri(iconName) ?? fallbackHref
+}

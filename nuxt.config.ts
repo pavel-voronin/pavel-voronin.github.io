@@ -4,7 +4,9 @@ import { extname, relative, resolve, sep } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 
 const CONTENT_DIRECTORY = resolve(process.cwd(), "content");
-const CONTENT_PRERENDER_ROUTE_PATHS = getContentMarkdownFiles(CONTENT_DIRECTORY).map((file) => {
+const CONTENT_PRERENDER_ROUTE_PATHS = getContentMarkdownFiles(
+  CONTENT_DIRECTORY,
+).map((file) => {
   const relativePath = relative(CONTENT_DIRECTORY, file);
   return toContentRoutePath(relativePath);
 });
@@ -141,14 +143,22 @@ export default defineNuxtConfig({
         { name: "twitter:description", content: "vibe coding the reality" },
         { name: "twitter:image", content: "/favicon.ico" },
       ],
-      link: [{ key: "site-favicon", rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+      link: [
+        {
+          key: "site-favicon",
+          rel: "icon",
+          type: "image/svg+xml",
+          href: "/favicon.svg",
+        },
+      ],
     },
   },
   modules: ["@nuxt/content", "@nuxt/icon"],
   icon: {
-    provider: "server",
-    fallbackToApi: false,
-    collections: ["streamline-ultimate-color", "simple-icons", "logos"],
+    provider: process.env.NODE_ENV === "development" ? "iconify" : "none",
+    clientBundle: {
+      scan: true,
+    },
   },
   content: {
     build: {
