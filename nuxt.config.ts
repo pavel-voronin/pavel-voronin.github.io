@@ -145,6 +145,11 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@nuxt/content", "@nuxt/icon"],
+  icon: {
+    provider: "server",
+    fallbackToApi: false,
+    collections: ["streamline-ultimate-color", "simple-icons", "logos"],
+  },
   content: {
     build: {
       markdown: {
