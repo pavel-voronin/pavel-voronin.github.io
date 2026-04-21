@@ -74,7 +74,7 @@ useHead({
     key: 'site-favicon',
     rel: 'icon',
     type: 'image/svg+xml',
-    href: 'https://api.iconify.design/streamline-ultimate-color/tags-1.svg',
+    href: createIconifyFaviconHref('streamline-ultimate-color:tags-1'),
   }],
 })
 </script>

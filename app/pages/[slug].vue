@@ -109,24 +109,12 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const toIconifySvgUrl = (iconName: string) => {
-  const segments = iconName.split(':')
-  const icon = segments.pop()
-  const collection = segments.pop()
-
-  if (!collection || !icon) {
-    return null
-  }
-
-  return `https://api.iconify.design/${encodeURIComponent(collection)}/${encodeURIComponent(icon)}.svg`
-}
-
 const articleFavicon = (() => {
   if (!page.value?.icon) {
     return null
   }
 
-  return toIconifySvgUrl(page.value.icon)
+  return createIconifyFaviconHref(page.value.icon)
 })()
 
 const fallbackFavicon = '/favicon.svg'
