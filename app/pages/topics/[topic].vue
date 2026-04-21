@@ -2,14 +2,21 @@
   <PageSection>
     <template #header>
       <PageHeader>
+        <template #icon>
+          <Icon name="streamline-ultimate-color:notes-paper-text" />
+        </template>
         <span class="headingInline">
-          <Icon name="streamline-ultimate-color:tags-1" />
-          <span class="headingLabel">Topic</span>
-          <TopicBadge :topic="topic" />
+          <AppLink to="/blog" silent no-visited class="headingBlog">
+            Blog
+          </AppLink>
+          <span class="headingDivider" aria-hidden="true">&rarr;</span>
+          <span class="headingIcon" aria-hidden="true">
+            <Icon name="streamline-ultimate-color:tags-1" />
+          </span>
+          <TopicBadge :topic="topicTitle" />
         </span>
       </PageHeader>
     </template>
-    <template #lead>Posts tagged with this topic.</template>
 
     <PostList v-if="topicPosts.length > 0" :posts="topicPosts" />
     <p v-else class="topicEmpty">
@@ -19,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { topicSlug } from '~/utils/topics'
+
 const route = useRoute()
 const rawTopic = Array.isArray(route.params.topic) ? route.params.topic[0] : route.params.topic
 
@@ -33,50 +42,31 @@ const topic = (() => {
   }
 })()
 
-const { data: topicPosts } = await useAsyncData(
-  `topic-posts-${topic}`,
-  async () => {
-    if (!topic) {
-      return []
-    }
+const derivedContent = await useDerivedContent()
+const topicKey = topicSlug(topic)
+const topicEntry = computed(() => {
+  return derivedContent.topicRegistry.find((entry) => {
+    return entry.slug === topicKey
+  })
+})
 
-    const posts = await queryCollection('content')
-      .order('date', 'DESC')
-      .all()
+const topicTitle = computed(() => {
+  return topicEntry.value?.title ?? topic
+})
 
-    return posts.filter((post) => {
-      if (!isPublishedToTopics(post)) {
-        return false
-      }
+const topicPosts = computed(() => {
+  return derivedContent.topicPostsBySlug[topicKey] ?? []
+})
 
-      const topics = typeof post.topics === 'string'
-        ? post.topics.split(',').map(item => item.trim()).filter(Boolean)
-        : Array.isArray(post.topics)
-          ? post.topics
-            .filter((item): item is string => typeof item === 'string')
-            .map(item => item.trim())
-            .filter(Boolean)
-          : []
-
-      return topics.some((item) => {
-        return typeof item === 'string' && item.trim() === topic
-      })
-    })
-  },
-  {
-    default: () => [],
-  },
-)
-
-useHead({
-  title: topic ? `Topic: ${topic}` : 'Topics',
+useHead(() => ({
+  title: topicTitle.value ?? 'Topics',
   link: [{
     key: 'site-favicon',
     rel: 'icon',
     type: 'image/svg+xml',
     href: createIconifyFaviconHref('streamline-ultimate-color:tags-1'),
   }],
-})
+}))
 </script>
 
 <style scoped>
@@ -87,10 +77,18 @@ useHead({
 }
 
 .headingInline {
-  @apply inline-flex items-center gap-3;
+  @apply inline-flex items-baseline gap-3;
 }
 
-.headingLabel {
-  @apply inline;
+.headingIcon {
+  @apply inline-flex shrink-0 self-center text-heading;
+}
+
+.headingBlog {
+  @apply shrink-0 whitespace-nowrap leading-none text-inherit -translate-y-0.5;
+}
+
+.headingDivider {
+  @apply self-center text-heading/35 text-2xl leading-none;
 }
 </style>

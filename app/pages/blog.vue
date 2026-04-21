@@ -8,24 +8,44 @@
         Blog
       </PageHeader>
     </template>
-    <template #lead>Archive of all posts in chronological order.</template>
+
+    <section v-if="topics.length > 0" class="topicsSection">
+      <div class="topicsList">
+        <TopicBadge
+          v-for="topic in topics"
+          :key="topic.slug"
+          :topic="topic.title"
+          :count="topic.count"
+        />
+      </div>
+    </section>
 
     <PostList :posts="posts" />
   </PageSection>
 </template>
 
 <script setup lang="ts">
+const derivedContent = await useDerivedContent()
+
+const posts = derivedContent.blogPosts
+const topics = derivedContent.topicRegistry
+
 const blogFaviconHref = createIconifyFaviconHref('streamline-ultimate-color:notes-paper-text')
 
 useHead({
   title: 'Blog',
   link: [{ key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: blogFaviconHref }],
 })
-
-const { data: posts } = await useAsyncData('all-posts', () => {
-  return queryCollection('content')
-    .order('date', 'DESC')
-    .all()
-    .then(items => items.filter(isPublishedToBlock))
-})
 </script>
+
+<style scoped>
+@reference "~/assets/css/main.css";
+
+.topicsSection {
+  @apply my-8 flex flex-col;
+}
+
+.topicsList {
+  @apply flex flex-wrap gap-2;
+}
+</style>

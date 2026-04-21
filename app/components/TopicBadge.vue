@@ -1,14 +1,20 @@
 <template>
-  <AppLink :to="toTopicPath(topic)" silent no-visited :class="badgeClass({ tone })">
-    {{ topic }}
+  <AppLink :to="topicPath(topic)" silent no-visited :class="badgeClass({ tone })">
+    <template #left>
+      <slot name="left" />
+    </template>
+    <span class="badgeLabel">{{ topic }}</span>
+    <span v-if="count !== undefined" class="badgeCount">{{ count }}</span>
   </AppLink>
 </template>
 
 <script setup lang="ts">
 import { tv } from 'tailwind-variants'
+import { topicPath } from '~/utils/topics'
 
 const props = defineProps<{
   topic: string
+  count?: number
   tone?: BadgeTone
 }>()
 
@@ -31,10 +37,6 @@ const tone = computed<BadgeTone>(() => {
   return topicToneMap[normalizeTopic(props.topic)] ?? 'default'
 })
 
-const toTopicPath = (topic: string) => {
-  return `/topics/${encodeURIComponent(topic)}`
-}
-
 const badgeClass = tv({
   base: 'badge',
   variants: {
@@ -53,7 +55,15 @@ const badgeClass = tv({
 @reference "~/assets/css/main.css";
 
 .badge {
-  @apply rounded-sm px-2 py-0.5 font-medium transition-colors;
+  @apply inline-flex items-baseline gap-1 rounded-sm px-2 py-0.5 font-medium transition-colors;
+}
+
+.badgeLabel {
+  @apply inline;
+}
+
+.badgeCount {
+  @apply inline self-baseline text-[0.7rem] leading-none tabular-nums opacity-75;
 }
 
 .badgeToneDefault {
