@@ -4,7 +4,12 @@
       <span class="postDateSlot">
         <time v-if="post.date" :datetime="post.date" class="postDate">{{ formatPostDate(post.date) }}</time>
       </span>
-      <AppLink :to="post.path" class="postLink">{{ post.title }}</AppLink>
+      <AppLink :to="post.path" class="postLink">
+        <template v-if="post.icon" #left>
+          <Icon :name="post.icon" />
+        </template>
+        <span class="postTitle">{{ post.title }}</span>
+      </AppLink>
     </li>
   </ul>
 </template>
@@ -14,6 +19,7 @@ type PostListItem = {
   path: string
   title: string
   date?: string | null
+  icon?: string | null
 }
 
 withDefaults(defineProps<{
@@ -55,8 +61,8 @@ const formatPostDate = (value: string) => {
 }
 
 .postItem {
-  @apply grid items-baseline gap-4;
-  grid-template-columns: 6rem minmax(0, 1fr);
+  @apply grid items-start gap-x-4 gap-y-0;
+  grid-template-columns: 4rem minmax(0, 1fr);
 }
 
 .postItem + .postItem {
@@ -64,14 +70,22 @@ const formatPostDate = (value: string) => {
 }
 
 .postLink {
-  @apply block w-full min-w-0 truncate;
+  @apply inline-flex min-w-0 items-start gap-1.5;
+}
+
+.postTitle {
+  @apply block min-w-0 flex-1 whitespace-normal break-words;
+}
+
+.postLink :deep(.icon) {
+  @apply self-start pt-[0.22em];
 }
 
 .postDateSlot {
-  @apply block;
+  @apply flex justify-center pt-[0.48em];
 }
 
 .postDate {
-  @apply block whitespace-nowrap text-xs uppercase tracking-widest text-caption;
+  @apply block whitespace-nowrap text-center text-xs uppercase tracking-widest text-caption leading-none;
 }
 </style>
