@@ -10,7 +10,7 @@ This page collects common Markdown blocks to validate spacing, rhythm, and reada
 
 ## Paragraphs and links
 
-This is regular body text with an [inline link](/posts), plus some **strong text**, _emphasis_, and `inline code`. Text can also be ~~struck through~~ when something is outdated or corrected.
+This is regular body text with an [inline link](/blog), plus some **strong text**, _emphasis_, and `inline code`. Text can also be ~~struck through~~ when something is outdated or corrected.
 
 Good writing does not announce itself. It simply moves the reader from one sentence to the next without friction, without confusion, and without unnecessary detours into territory that does not serve the point being made. Line length, spacing, and contrast are not cosmetic — they are the infrastructure that makes extended reading comfortable. A column that is too wide forces the eye to travel too far. One that is too narrow chops thought into fragments. The right measure keeps the reader inside the text rather than aware of the page.
 
