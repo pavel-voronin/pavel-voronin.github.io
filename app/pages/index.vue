@@ -5,7 +5,12 @@
     <PageSection>
       <template #header>
         <HomeSectionHeading>
-          <AppLink to="/blog" silent>Blog</AppLink>
+          <AppLink to="/blog" silent>
+            <template #left>
+              <Icon name="streamline-ultimate-color:pasta-bowl-warm" />
+            </template>
+            Fresh
+          </AppLink>
         </HomeSectionHeading>
       </template>
 
