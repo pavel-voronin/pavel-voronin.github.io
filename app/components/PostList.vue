@@ -82,7 +82,7 @@ const formatPostDate = (value: string) => {
 }
 
 .postDateSlot {
-  @apply flex justify-start pt-[0.36em];
+  @apply flex justify-start pt-[0.46em];
 }
 
 .postDate {

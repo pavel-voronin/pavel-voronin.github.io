@@ -12,6 +12,8 @@
 </template>
 
 <script setup lang="ts">
+import { splitTopics } from '~/utils/topics'
+
 const route = useRoute()
 const slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
 
@@ -75,23 +77,7 @@ const publicationLinks = computed<PublicationLink[]>(() => {
 })
 
 const topicTags = computed(() => {
-  const topics = page.value?.topics
-
-  if (typeof topics === 'string') {
-    return topics
-      .split(',')
-      .map(topic => topic.trim())
-      .filter(Boolean)
-  }
-
-  if (Array.isArray(topics)) {
-    return topics
-      .filter((topic): topic is string => typeof topic === 'string')
-      .map(topic => topic.trim())
-      .filter(Boolean)
-  }
-
-  return []
+  return splitTopics(page.value?.topics)
 })
 
 const titleLines = computed(() => {
