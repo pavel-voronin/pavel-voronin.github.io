@@ -186,7 +186,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  css: ["@embedos/vue/style.css", "~/assets/css/main.css"],
+  css: ["~/assets/css/main.css"],
   nitro: {
     prerender: {
       routes: CONTENT_PRERENDER_ROUTE_PATHS,
