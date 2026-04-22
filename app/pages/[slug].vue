@@ -2,7 +2,7 @@
   <PageSection>
     <template #header>
       <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :date-updated="page?.date_updated" :icon="page?.icon" :topics="topicTags"
-        :title-lines="titleLines" :publication-links="publicationLinks" />
+        :title-lines="titleLines" />
     </template>
 
     <ContentRenderer v-if="page" class="articleBody" :value="page" />
@@ -25,55 +25,6 @@ const { data: page } = await useAsyncData(`content-${slug}`, () => {
 
 const shouldShowComments = computed(() => {
   return isPublishedToBlock(page.value) && page.value?.comments === true
-})
-
-type PublicationLink = {
-  label: string
-  platform?: string
-  url: string
-}
-
-type SocialLinks = {
-  twitter?: string
-  hackerNews?: string
-  lobsters?: string
-  reddit?: string
-  linkedin?: string
-}
-
-const socialLinks = computed<SocialLinks>(() => {
-  const current = page.value as (SocialLinks | null | undefined)
-  return current ?? {}
-})
-
-const publicationLinks = computed<PublicationLink[]>(() => {
-  if (!page.value) {
-    return []
-  }
-
-  const links: PublicationLink[] = []
-
-  if (socialLinks.value.twitter) {
-    links.push({ label: 'On X', platform: 'x', url: socialLinks.value.twitter })
-  }
-
-  if (socialLinks.value.hackerNews) {
-    links.push({ label: 'On Hacker News', platform: 'hacker-news', url: socialLinks.value.hackerNews })
-  }
-
-  if (socialLinks.value.lobsters) {
-    links.push({ label: 'On Lobsters', platform: 'lobsters', url: socialLinks.value.lobsters })
-  }
-
-  if (socialLinks.value.reddit) {
-    links.push({ label: 'On Reddit', platform: 'reddit', url: socialLinks.value.reddit })
-  }
-
-  if (socialLinks.value.linkedin) {
-    links.push({ label: 'On LinkedIn', platform: 'linkedin', url: socialLinks.value.linkedin })
-  }
-
-  return links
 })
 
 const topicTags = computed(() => {
@@ -122,8 +73,7 @@ const articleFavicon = (() => {
   return createIconifyFaviconHref(page.value.icon)
 })()
 
-const fallbackFavicon = '/favicon.svg'
-const baseFaviconHref = articleFavicon ?? fallbackFavicon
+const baseFaviconHref = articleFavicon ?? '/favicon.svg'
 const { faviconHref } = useReadingProgressFavicon({
   baseFaviconHref,
 })
