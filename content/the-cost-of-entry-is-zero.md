@@ -7,6 +7,8 @@ icon: streamline-ultimate-color:wifi-off
 titleLines: 1
 comments: true
 topics: AI, productivity
+twitter: https://x.com/pavel_voronin/status/2046815167581958460
+linkedin: https://www.linkedin.com/pulse/cost-entry-zero-pavel-voronin-qm6fc/
 ---
 
 Today I burned through half of my weekly token budget digging into a project that was already release-ready. I found bugs no one would have found. I fixed configs that were already working. By the evening, the project was better. Whether it had become more necessary is another question.
