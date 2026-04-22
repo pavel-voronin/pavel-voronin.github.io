@@ -1,6 +1,6 @@
 <template>
   <AppLink :to="topicPath(topic)" silent no-visited :class="badgeClass({ tone })">
-    <template #left>
+    <template v-if="slots.left" #left>
       <slot name="left" />
     </template>
     <span class="badgeLabel">{{ topic }}</span>
@@ -17,6 +17,7 @@ const props = defineProps<{
   count?: number
   tone?: BadgeTone
 }>()
+const slots = useSlots()
 
 const normalizeTopic = (value: string) => {
   return value.trim().toLowerCase()
