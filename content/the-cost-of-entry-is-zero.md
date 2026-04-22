@@ -1,6 +1,6 @@
 ---
 title: The Cost of Entry Is Zero
-description: no
+description: How zero-friction AI makes it easier to start than to finish, and why the real skill is knowing when not to keep going
 date: 2026-04-21
 publish-to: all
 icon: streamline-ultimate-color:wifi-off

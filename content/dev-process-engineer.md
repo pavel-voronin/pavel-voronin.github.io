@@ -1,6 +1,6 @@
 ---
 title: Your Development Process Is Now a Full-Time Engineering Problem
-description: no
+description: The problem isn’t writing code anymore. It’s running the system that produces it.
 date: 2026-02-04
 publish-to: all
 icon: streamline-ultimate-color:module-four

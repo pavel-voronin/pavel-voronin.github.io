@@ -1,6 +1,6 @@
 ---
 title: How I Gave My Agent Live Access to Chrome Bookmarks
-description: no
+description: From reading Chrome’s bookmarks file to a CDP gateway over chrome://bookmarks — building real API access for an external agent.
 date: 2026-03-09
 publish-to: all
 icon: streamline-ultimate-color:app-window-bookmark
