@@ -58,15 +58,28 @@ const topicPosts = computed(() => {
   return derivedContent.topicPostsBySlug[topicKey] ?? []
 })
 
-useHead(() => ({
-  title: topicTitle.value ?? 'Topics',
+const topicDescription = computed(() => {
+  return `Posts about ${topicTitle.value}`
+})
+
+useSeoMeta({
+  title: topicTitle,
+  description: topicDescription,
+  ogTitle: topicTitle,
+  ogDescription: topicDescription,
+  ogType: 'website',
+  twitterTitle: topicTitle,
+  twitterDescription: topicDescription,
+})
+
+useHead({
   link: [{
     key: 'site-favicon',
     rel: 'icon',
     type: 'image/svg+xml',
     href: createIconifyFaviconHref('streamline-ultimate-color:tags-1'),
   }],
-}))
+})
 </script>
 
 <style scoped>

@@ -8,9 +8,11 @@ export default defineContentConfig({
       source: "**/*.md",
       schema: z.object({
         "publish-to": z.enum(["blog", "topics", "all"]).optional(),
+        description: z.string().optional(),
         date: z.string().optional(),
         date_updated: z.string().optional(),
         icon: z.string().optional(),
+        image: z.string().optional(),
         comments: z.boolean().optional(),
         twitter: z.string().url().optional(),
         hackerNews: z.string().url().optional(),

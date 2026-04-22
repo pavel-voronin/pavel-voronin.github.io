@@ -124,24 +124,13 @@ function toRouteName(contentRelativePath: string): string {
 export default defineNuxtConfig({
   app: {
     head: {
-      title: "Pavel Voronin",
       htmlAttrs: {
         lang: "en",
       },
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "description", content: "vibe coding the reality" },
         { name: "robots", content: "index, follow" },
-        { property: "og:type", content: "website" },
-        { property: "og:site_name", content: "Pavel Voronin" },
-        { property: "og:title", content: "Pavel Voronin" },
-        { property: "og:description", content: "vibe coding the reality" },
-        { property: "og:image", content: "/favicon.ico" },
-        { name: "twitter:card", content: "summary" },
-        { name: "twitter:title", content: "Pavel Voronin" },
-        { name: "twitter:description", content: "vibe coding the reality" },
-        { name: "twitter:image", content: "/favicon.ico" },
       ],
       link: [
         {
@@ -151,6 +140,11 @@ export default defineNuxtConfig({
           href: "/favicon.svg",
         },
       ],
+    },
+  },
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
     },
   },
   modules: ["@nuxt/content", "@nuxt/icon"],

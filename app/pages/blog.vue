@@ -32,8 +32,17 @@ const topics = derivedContent.topicRegistry
 
 const blogFaviconHref = createIconifyFaviconHref('streamline-ultimate-color:notes-paper-text')
 
-useHead({
+useSeoMeta({
   title: 'Blog',
+  description: SITE_DESCRIPTION,
+  ogTitle: 'Blog',
+  ogDescription: SITE_DESCRIPTION,
+  ogType: 'website',
+  twitterTitle: 'Blog',
+  twitterDescription: SITE_DESCRIPTION,
+})
+
+useHead({
   link: [{ key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: blogFaviconHref }],
 })
 </script>
