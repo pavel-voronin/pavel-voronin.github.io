@@ -17,6 +17,7 @@ concurrency:
 
 env:
   BUILD_PATH: "."
+  NUXT_PUBLIC_SITE_URL: "https://pavelvoronin.com"
 
 jobs:
   build:
