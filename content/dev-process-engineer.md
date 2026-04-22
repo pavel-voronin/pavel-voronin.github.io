@@ -7,6 +7,7 @@ icon: streamline-ultimate-color:module-four
 titleLines: 2
 comments: true
 topics: management, AI
+twitter: https://x.com/pavel_voronin/status/2046993930668130427
 linkedin: https://www.linkedin.com/pulse/your-development-process-now-full-time-engineering-problem-voronin-magnc/
 ---
 
