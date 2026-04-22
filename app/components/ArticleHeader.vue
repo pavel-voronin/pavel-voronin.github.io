@@ -34,6 +34,10 @@
     </h1>
 
     <div v-if="normalizedTopics.length > 0" class="articleTopics">
+      <AppLink to="/blog" silent no-visited class="articleBackLink">
+        &lt;- back to blog
+      </AppLink>
+
       <TopicBadge
         v-for="topic in normalizedTopics"
         :key="topic"
@@ -248,5 +252,9 @@ const headerInlineStyle = computed(() => {
 .articleTopics {
   grid-area: topics;
   @apply mt-3 flex flex-wrap gap-2 text-xs;
+}
+
+.articleBackLink {
+  @apply inline-flex items-baseline gap-1 rounded-sm py-0.5 pr-2 font-medium text-faint transition-colors hover:text-body;
 }
 </style>
