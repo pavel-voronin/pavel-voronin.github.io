@@ -7,7 +7,6 @@
       <p class="oneLiner">
         I've been writing code since the early '90s. Three decades later, I'm still curious — about AI, architecture,
         teams, and everything in between.
-        <AppLink to="/me">Read more</AppLink>
       </p>
     </div>
 

@@ -1,5 +1,5 @@
 <template>
-  <blockquote class="my-8 border-l-4 border-edge py-0.5 pl-5 text-base italic text-caption">
+  <blockquote class="my-3 border-l-4 border-edge py-0.5 pl-5 text-base italic text-caption">
     <slot />
   </blockquote>
 </template>

@@ -3,19 +3,20 @@
     <template #header>
       <div class="heroContent">
         <h1 class="heroHeading">
-          <Icon name="streamline-ultimate-color:cursor-hand-2" size="1cap" />
+          <Icon name="streamline-ultimate-color:cursor-hand-2" />
           Hi, I'm Pavel
         </h1>
         <p class="heroText">
           And I build AI tooling, agents, and software systems that are meant to evolve — not just run.
-          Much of my work explores how human workflows change once software starts acting back.
+          Much of my work explores how human workflows change once software starts acting back — <AppLink to="/me">
+            read more</AppLink>
         </p>
-        <AppButton to="/me" class="self-start">
-          <template #left>
-            <Icon name="streamline-ultimate-color:user-question" />
-          </template>
-          About me
-        </AppButton>
+        <ProseBlockquote class="border-green-600">
+          <AppLink to="/now"><template #left>
+              <Icon name="streamline-ultimate-color:lab-flask-experiment" />
+            </template>Now</AppLink> I'm building a tool that syncs ChatGPT conversations to disk so I can read them
+          directly in Obsidian.
+        </ProseBlockquote>
       </div>
     </template>
   </PageSection>
