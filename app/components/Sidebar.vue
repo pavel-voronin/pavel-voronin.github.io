@@ -38,6 +38,14 @@
             Now
           </AppLink>
         </li>
+        <li>
+          <AppLink to="https://github.com/pavel-voronin?tab=repositories" target="blank" silent class="linkRow">
+            <template #left>
+              <Icon name="streamline-ultimate-color:file-code-check" />
+            </template>
+            Repositories
+          </AppLink>
+        </li>
       </ul>
     </nav>
 
