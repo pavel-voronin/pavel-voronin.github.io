@@ -39,7 +39,7 @@
           </AppLink>
         </li>
         <li>
-          <AppLink to="https://github.com/pavel-voronin?tab=repositories" target="blank" silent class="linkRow">
+          <AppLink href="https://github.com/pavel-voronin?tab=repositories" target="_blank" silent no-visited class="linkRow">
             <template #left>
               <Icon name="streamline-ultimate-color:file-code-check" />
             </template>
