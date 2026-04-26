@@ -15,7 +15,6 @@ Now <Snippet name="now"></Snippet>
 In the backlog:
 
 - \[80%\] OpenRouter-based multi-purpose multi-agent IRC-style chat
-- \[0%\] Custom Telegram client for my agent
 
 ## Professional
 
