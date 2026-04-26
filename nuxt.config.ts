@@ -62,7 +62,10 @@ function getContentMarkdownFiles(rootDir: string): string[] {
         continue;
       }
 
-      if (extname(entry.name) === ".md" || extname(entry.name) === ".mdc") {
+      if (
+        !entry.name.startsWith("_") &&
+        (extname(entry.name) === ".md" || extname(entry.name) === ".mdc")
+      ) {
         files.push(fullPath);
       }
     }

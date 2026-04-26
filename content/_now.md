@@ -1,0 +1,1 @@
+I'm building **AgenTG** - Telegram *client* for my agent so he can read my chats, groups and channels and send my secrets back to you if you ask kindly :)

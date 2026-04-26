@@ -5,7 +5,10 @@ export default defineContentConfig({
   collections: {
     content: defineCollection({
       type: "page",
-      source: "**/*.md",
+      source: {
+        include: "**/*.md",
+        exclude: ["_*.md"],
+      },
       schema: z.object({
         "publish-to": z.enum(["blog", "topics", "all"]).optional(),
         description: z.string().optional(),
@@ -17,6 +20,12 @@ export default defineContentConfig({
         topics: z.union([z.array(z.string()), z.string()]).optional(),
         titleLines: z.number().int().min(1).max(6).default(1).optional(),
       }),
+    }),
+    snippets: defineCollection({
+      type: "page",
+      source: {
+        include: "**/_*.md",
+      },
     }),
   },
 });

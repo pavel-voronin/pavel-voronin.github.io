@@ -14,8 +14,7 @@
         <ProseBlockquote class="border-green-600">
           <AppLink to="/now"><template #left>
               <Icon name="streamline-ultimate-color:lab-flask-experiment" />
-            </template>Now</AppLink> I'm building a tool that syncs ChatGPT conversations to disk so I can read them
-          directly in Obsidian.
+            </template>Now</AppLink> <Snippet name="now" />
         </ProseBlockquote>
       </div>
     </template>
