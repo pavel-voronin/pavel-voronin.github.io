@@ -107,4 +107,4 @@ The navigator answers the question of how to get from here to there. The cartogr
 
 But strong AI begins where a system can not only find a route on the map, but also notice that the map is wrong. Not necessarily as a human would, not through a human biography, suffering, or personal obsession, but through some form of continuity of consequences: memory of errors, return to anomalies, testing of new frameworks, social feedback, and the ability to change the very framing of the task.
 
-LLMs can answer questions. Strong AI must be able to keep questions alive. Because new maps do not emerge when we find the most beautiful answer within the old framework. They emerge when a question has lived long enough that the old framework gives way.
+LLMs can answer questions. Strong AI must be able to keep questions alive. New maps do not emerge when we find the most elegant route on the old map. They emerge when a question has lived long enough to reveal that the old map no longer fits the territory.
