@@ -5,9 +5,11 @@
         :title-lines="titleLines" />
     </template>
 
+    <ArticleLanguageLinks v-if="translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />
+
     <ContentRenderer v-if="page" class="articleBody" :value="page" />
 
-    <UtterancesComments v-if="shouldShowComments" />
+    <UtterancesComments v-if="shouldShowComments" :issue-term="commentsIssueTerm" />
   </PageSection>
 </template>
 
@@ -23,8 +25,24 @@ const { data: page } = await useAsyncData(`content-${slug}`, () => {
     .first()
 })
 
+const derivedContent = await useDerivedContent()
+
+const translationLinks = computed(() => {
+  if (!page.value?.path) {
+    return []
+  }
+
+  return derivedContent.articleTranslationsByPath[page.value.path] ?? []
+})
+
+const commentsIssueTerm = computed(() => {
+  return translationLinks.value.find(translation => translation.language === 'en')?.path
+    ?? page.value?.path
+    ?? `/${slug}`
+})
+
 const shouldShowComments = computed(() => {
-  return isPublishedToBlock(page.value) && page.value?.comments === true
+  return page.value?.comments === true
 })
 
 const topicTags = computed(() => {
@@ -94,7 +112,17 @@ useSeoMeta({
 useHead(() => {
   const head = {
     title: articleTitle.value,
-    link: [{ key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: faviconHref.value }],
+    link: [
+      { key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: faviconHref.value },
+      ...translationLinks.value.map((translation) => {
+        return {
+          key: `alternate-${translation.language}`,
+          rel: 'alternate',
+          hreflang: translation.language,
+          href: new URL(translation.path, siteOrigin.value).href,
+        }
+      }),
+    ],
   }
 
   return head

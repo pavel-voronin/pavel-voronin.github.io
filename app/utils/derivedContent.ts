@@ -8,6 +8,8 @@ export type ContentItem = {
   title?: string
   date?: string | null
   icon?: string | null
+  language?: string | null
+  translationKey?: string | null
   topics?: string | string[] | null
   'publish-to'?: PublishDestination | null
 }
@@ -25,25 +27,61 @@ export type TopicRegistryItem = {
   count: number
 }
 
+export type ArticleTranslation = {
+  language: string
+  path: string
+  title: string
+}
+
 export type DerivedContent = {
   blogPosts: BlogPost[]
   topicRegistry: TopicRegistryItem[]
   topicPostsBySlug: Record<string, BlogPost[]>
+  articleTranslationsByPath: Record<string, ArticleTranslation[]>
 }
 
 export const emptyDerivedContent: DerivedContent = {
   blogPosts: [],
   topicRegistry: [],
   topicPostsBySlug: {},
+  articleTranslationsByPath: {},
+}
+
+const normalizeLanguage = (value: string | null | undefined) => {
+  const normalizedValue = value?.trim().toLowerCase()
+  return normalizedValue || 'en'
+}
+
+const isCanonicalLanguage = (item: ContentItem) => {
+  return normalizeLanguage(item.language) === 'en'
 }
 
 export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
   const topicRegistryMap = new Map<string, TopicRegistryItem>()
   const topicPostsBySlug: Record<string, BlogPost[]> = {}
   const blogPosts: BlogPost[] = []
+  const translationsByKey = new Map<string, ArticleTranslation[]>()
 
   for (const item of items) {
     if (!item.path || !item.title) {
+      continue
+    }
+
+    const translationKey = item.translationKey?.trim()
+
+    if (translationKey) {
+      const translations = translationsByKey.get(translationKey) ?? []
+
+      translations.push({
+        language: normalizeLanguage(item.language),
+        path: item.path,
+        title: item.title,
+      })
+
+      translationsByKey.set(translationKey, translations)
+    }
+
+    if (!isCanonicalLanguage(item)) {
       continue
     }
 
@@ -99,11 +137,46 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
     posts.sort(sortByDateDesc)
   }
 
+  const languagePriority = (language: string) => {
+    if (language === 'en') {
+      return 0
+    }
+
+    if (language === 'ru') {
+      return 1
+    }
+
+    return 2
+  }
+
+  const articleTranslationsByPath: Record<string, ArticleTranslation[]> = {}
+
+  for (const translations of translationsByKey.values()) {
+    if (translations.length < 2) {
+      continue
+    }
+
+    translations.sort((left, right) => {
+      const priorityDelta = languagePriority(left.language) - languagePriority(right.language)
+
+      if (priorityDelta !== 0) {
+        return priorityDelta
+      }
+
+      return left.language.localeCompare(right.language)
+    })
+
+    for (const translation of translations) {
+      articleTranslationsByPath[translation.path] = translations
+    }
+  }
+
   return {
     blogPosts,
     topicRegistry: [...topicRegistryMap.values()].sort((left, right) => {
       return left.title.localeCompare(right.title)
     }),
     topicPostsBySlug,
+    articleTranslationsByPath,
   }
 }

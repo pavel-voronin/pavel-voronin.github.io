@@ -16,6 +16,8 @@ export default defineContentConfig({
         date_updated: z.string().optional(),
         icon: z.string().optional(),
         image: z.string().optional(),
+        language: z.string().optional(),
+        translationKey: z.string().optional(),
         comments: z.boolean().optional(),
         topics: z.union([z.array(z.string()), z.string()]).optional(),
         titleLines: z.number().int().min(1).max(6).default(1).optional(),

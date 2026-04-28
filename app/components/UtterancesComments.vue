@@ -11,6 +11,10 @@
 const route = useRoute()
 const commentsEmbed = ref<HTMLElement | null>(null)
 
+const props = defineProps<{
+  issueTerm: string
+}>()
+
 const mountCommentsWidget = () => {
   if (!import.meta.client || !commentsEmbed.value) {
     return
@@ -21,7 +25,7 @@ const mountCommentsWidget = () => {
   const script = document.createElement('script')
   script.src = 'https://utteranc.es/client.js'
   script.setAttribute('repo', 'pavel-voronin/pavel-voronin.github.io')
-  script.setAttribute('issue-term', 'pathname')
+  script.setAttribute('issue-term', props.issueTerm)
   script.setAttribute('label', 'comment')
   script.setAttribute('theme', 'github-light')
   script.setAttribute('crossorigin', 'anonymous')
@@ -35,7 +39,7 @@ onMounted(async () => {
   mountCommentsWidget()
 })
 
-watch(() => route.path, async () => {
+watch(() => [route.path, props.issueTerm], async () => {
   await nextTick()
   mountCommentsWidget()
 })

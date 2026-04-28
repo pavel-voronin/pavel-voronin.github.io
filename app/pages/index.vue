@@ -20,12 +20,8 @@
 </template>
 
 <script setup lang="ts">
-const { data: latestPosts } = await useAsyncData('latest-posts', () => {
-  return queryCollection('content')
-    .order('date', 'DESC')
-    .all()
-    .then(posts => posts.filter(isPublishedToBlock).slice(0, 5))
-})
+const derivedContent = await useDerivedContent()
+const latestPosts = derivedContent.blogPosts.slice(0, 5)
 </script>
 
 <style scoped>
