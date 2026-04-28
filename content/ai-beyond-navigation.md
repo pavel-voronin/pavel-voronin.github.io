@@ -9,6 +9,7 @@ icon: streamline-ultimate-color:button-zigzag-1
 titleLines: 2
 comments: true
 topics: ai
+image: og-image.jpg
 ---
 
 Modern large language models leave a strange, contradictory impression. On the one hand, they can already do many things that once seemed like signs of advanced intelligence: explain complex ideas in simple language, write code, argue, translate between disciplines, find analogies, formulate vague intuitions, and connect fragments of knowledge that would be difficult for a person to hold in mind at once. On the other hand, the longer you work with them, the stronger the feeling becomes that they are not so much creating new worlds of thought as moving brilliantly through existing ones.
