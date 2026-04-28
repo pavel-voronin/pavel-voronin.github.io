@@ -26,13 +26,12 @@
 }
 
 .columns {
-  @apply mx-auto min-h-screen w-full max-w-340 grid text-sm;
+  @apply mx-auto min-h-screen w-full max-w-340 grid text-lg;
   grid-template-columns: 1fr;
 }
 
 @variant sidenav {
   .columns {
-    @apply text-lg;
     grid-template-columns: minmax(0, 24rem) calc(var(--content-guard) * 2 + var(--content-max));
   }
 }
