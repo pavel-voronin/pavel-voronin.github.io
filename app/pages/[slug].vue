@@ -1,11 +1,11 @@
 <template>
   <PageSection>
-    <template #header>
+    <template v-if="isArticleValid" #header>
       <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :date-updated="page?.date_updated" :icon="page?.icon" :topics="topicTags"
         :title-lines="titleLines" />
     </template>
 
-    <ArticleLanguageLinks v-if="translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />
+    <ArticleLanguageLinks v-if="isArticleValid && translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />
 
     <ContentRenderer v-if="page" class="articleBody" :value="page" />
 
@@ -27,8 +27,12 @@ const { data: page } = await useAsyncData(`content-${slug}`, () => {
 
 const derivedContent = await useDerivedContent()
 
+const isArticleValid = computed(() => {
+  return page.value?.articleValid !== false
+})
+
 const translationLinks = computed(() => {
-  if (!page.value?.path) {
+  if (!isArticleValid.value || !page.value?.path) {
     return []
   }
 
@@ -42,10 +46,14 @@ const commentsIssueTerm = computed(() => {
 })
 
 const shouldShowComments = computed(() => {
-  return page.value?.comments === true
+  return isArticleValid.value && page.value?.comments === true
 })
 
 const topicTags = computed(() => {
+  if (!isArticleValid.value) {
+    return []
+  }
+
   return splitTopics(page.value?.topics)
 })
 
@@ -68,15 +76,27 @@ const canonicalUrl = useCanonicalUrl()
 const siteOrigin = useSiteOrigin()
 const siteImageUrl = useAbsoluteSiteUrl(SITE_OG_IMAGE_PATH)
 const articleImageUrl = computed(() => {
+  if (!isArticleValid.value) {
+    return siteImageUrl.value
+  }
+
   return resolveArticleImageUrl(page.value?.image, page.value?.path, siteOrigin.value) ?? siteImageUrl.value
 })
 
 const articleDescription = computed(() => {
+  if (!isArticleValid.value) {
+    return SITE_DESCRIPTION
+  }
+
   return page.value?.description ?? SITE_DESCRIPTION
 })
 
 const articleTitle = computed(() => {
-  return page.value?.title ?? SITE_NAME
+  if (!isArticleValid.value) {
+    return SITE_NAME
+  }
+
+  return titleToPlainText(page.value?.title) || SITE_NAME
 })
 
 const articleOgTitle = computed(() => {
@@ -84,7 +104,7 @@ const articleOgTitle = computed(() => {
 })
 
 const articleFavicon = (() => {
-  if (!page.value?.icon) {
+  if (!isArticleValid.value || !page.value?.icon) {
     return null
   }
 
@@ -101,7 +121,7 @@ useSeoMeta({
   description: articleDescription,
   ogTitle: articleOgTitle,
   ogDescription: articleDescription,
-  ogType: 'article',
+  ogType: computed(() => isArticleValid.value ? 'article' : 'website'),
   ogImage: articleImageUrl,
   ogUrl: canonicalUrl,
   twitterTitle: articleOgTitle,

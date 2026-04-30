@@ -15,7 +15,7 @@
     </div>
 
     <h1 class="articleHeading">
-      {{ props.title }}
+      <ArticleTitleText :title="props.title" />
     </h1>
 
     <div v-if="normalizedTopics.length > 0" class="articleTopics">

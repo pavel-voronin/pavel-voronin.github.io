@@ -8,7 +8,9 @@
         <template v-if="post.icon" #left>
           <Icon :name="post.icon" />
         </template>
-        <span class="postTitle">{{ post.title }}</span>
+        <span class="postTitle">
+          <ArticleTitleText :title="post.title" />
+        </span>
       </AppLink>
     </li>
   </ul>

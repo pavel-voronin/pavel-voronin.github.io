@@ -12,6 +12,7 @@ export type ContentItem = {
   translationKey?: string | null
   topics?: string | string[] | null
   'publish-to'?: PublishDestination | null
+  articleValid?: boolean | null
 }
 
 export type BlogPost = {
@@ -63,6 +64,10 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
   const translationsByKey = new Map<string, ArticleTranslation[]>()
 
   for (const item of items) {
+    if (item.articleValid === false) {
+      continue
+    }
+
     if (!item.path || !item.title) {
       continue
     }

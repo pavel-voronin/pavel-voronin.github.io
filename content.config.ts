@@ -21,6 +21,9 @@ export default defineContentConfig({
         comments: z.boolean().optional(),
         topics: z.union([z.array(z.string()), z.string()]).optional(),
         titleLines: z.number().int().min(1).max(6).default(1).optional(),
+        articleValid: z.boolean().optional(),
+        articleWarnings: z.array(z.string()).optional(),
+        articleTitleSource: z.enum(["frontmatter", "h1", "missing"]).optional(),
       }),
     }),
     snippets: defineCollection({

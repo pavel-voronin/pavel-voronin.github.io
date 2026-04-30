@@ -4,6 +4,10 @@ import { extname, relative, resolve, sep } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 
 const CONTENT_DIRECTORY = resolve(process.cwd(), "content");
+const ARTICLE_TITLE_TRANSFORMER = resolve(
+  process.cwd(),
+  "content-transformers/article-title.ts",
+);
 const CONTENT_PRERENDER_ROUTE_PATHS = getContentMarkdownFiles(
   CONTENT_DIRECTORY,
 ).map((file) => {
@@ -159,6 +163,7 @@ export default defineNuxtConfig({
   },
   content: {
     build: {
+      transformers: [ARTICLE_TITLE_TRANSFORMER],
       markdown: {
         highlight: {
           theme: {

@@ -25,7 +25,7 @@ So the problem became: how do you give an external agent access to a `Bookmarks 
 
 Below is a short log of how the solution gradually evolved from naive to working.
 
-# First idea: read the bookmarks file
+## First idea: read the bookmarks file
 
 The most obvious idea was almost mundane: if Chrome stores bookmarks somewhere, just read the file.
 
@@ -39,7 +39,7 @@ So you can read the file, but you can't build a reliable management interface on
 
 This stage was useful because it immediately established something important: the real source of state is not the file — it's the live browser.
 
-# Second attempt: use an extension
+## Second attempt: use an extension
 
 The next logical step was obvious after reading the docs: Chrome has a full-featured `Bookmarks API`, but it's only available to extensions.
 
@@ -66,7 +66,7 @@ But the architecture looked a bit odd. The extension carried no logic — it exi
 
 And the longer I stared at this setup, the more I wanted to know: could I get rid of the extension entirely.
 
-# The key insight: it's not about the extension, it's about the context
+## The key insight: it's not about the extension, it's about the context
 
 The breakthrough came when I started working with CDP more closely.
 
@@ -114,7 +114,7 @@ await Runtime.evaluate({
 
 At this point, the solution finally started looking like a proper engineering construct rather than a pile of hacks. And it became clear that bookmarks were just the first case — the same mechanism potentially opens access to other Chrome APIs, as long as the corresponding `chrome://` page exports them.
 
-# The CLI phase and abandoning it
+## The CLI phase and abandoning it
 
 Originally the project was conceived as a CLI tool. It seemed logical that the interface for working with bookmarks would be the command line — good for automation, easy to plug into pipelines.
 
@@ -126,7 +126,7 @@ When the architecture started shifting toward a Docker container with a browser 
 
 Killing the CLI was unpleasant — a lot of work had gone into it, and it actually worked. But this is one of those cases where the tool served its purpose — it helped debug the core and validate scenarios — and then started holding back progress. I kept it as legacy and went to build the service.
 
-# Moving to a service
+## Moving to a service
 
 The next step was turning the system into a proper service gateway. And this was probably the most satisfying moment of the entire project — when everything suddenly clicks into a single coherent design.
 
@@ -154,13 +154,13 @@ The gateway provides several transports — `POST /rpc` for JSON-RPC calls, `GET
 
 In essence, it's an inversion of the usual model: normally a service calls an external API, but here the service wraps the browser and becomes the API itself.
 
-# On security
+## On security
 
 Worth stating the obvious: `--remote-debugging-port` is effectively open access to the entire browser. CDP has no built-in authentication. Whoever connects is in control.
 
 In the container setup this is manageable: the CDP port isn't exposed externally, only the service inside the same container talks to it. From outside, only the gateway with its own auth layer is accessible. But if you're thinking of running this on an open machine without a container — don't. CDP with an open port on localhost means full access to sessions, cookies, passwords, and everything else.
 
-# Conclusion
+## Conclusion
 
 The general pattern — `CDP + chrome:// page = access to Chrome APIs` — works, but not universally. Each `chrome://` page only exports the namespaces its own WebUI requires.
 
