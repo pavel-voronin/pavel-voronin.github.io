@@ -19,11 +19,18 @@ type ArticleContent = {
   id?: string;
   title?: string;
   body?: MinimarkBody;
+  readingTime?: ArticleReadingTime;
   articleValid?: boolean;
   articleWarnings?: string[];
   articleTitleSource?: ArticleTitleSource;
   [key: string]: unknown;
 };
+
+type ArticleReadingTime = {
+  wordCount: number;
+};
+
+const WORD_PATTERN = /[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu;
 
 const isElementNode = (node: MinimarkNode): node is MinimarkElement => {
   return Array.isArray(node) && typeof node[0] === "string";
@@ -47,6 +54,34 @@ const getNodeText = (node: MinimarkNode): string => {
   }
 
   return getNodeChildren(node).map(getNodeText).join("");
+};
+
+const countWords = (value: string) => {
+  return value.match(WORD_PATTERN)?.length ?? 0;
+};
+
+const countNodeWords = (node: MinimarkNode): number => {
+  if (typeof node === "string") {
+    return countWords(node);
+  }
+
+  if (!isElementNode(node)) {
+    return 0;
+  }
+
+  return getNodeChildren(node).reduce((count, childNode) => {
+    return count + countNodeWords(childNode);
+  }, 0);
+};
+
+const buildReadingTime = (nodes: MinimarkNode[]): ArticleReadingTime => {
+  const wordCount = nodes.reduce((count, node) => {
+    return count + countNodeWords(node);
+  }, 0);
+
+  return {
+    wordCount,
+  };
 };
 
 const codeDelimiterFor = (value: string) => {
@@ -144,6 +179,10 @@ export default defineTransformer({
     const h1Title = firstBlockIsH1 && firstBlock ? getNodeTitleMarkdown(firstBlock).trim() : "";
     const h1PlainTitle = firstBlockIsH1 && firstBlock ? getNodeText(firstBlock).trim() : "";
     const currentTitle = typeof content.title === "string" ? content.title.trim() : "";
+    const articleBodyValue = firstBlockIsH1
+      ? bodyValue.filter((_, index) => index !== firstBlockIndex)
+      : bodyValue;
+    const readingTime = buildReadingTime(articleBodyValue);
     let articleValid = true;
     let articleTitleSource: ArticleTitleSource = currentTitle ? "frontmatter" : "missing";
     let normalizedTitle = currentTitle;
@@ -189,6 +228,7 @@ export default defineTransformer({
       return {
         ...content,
         title: normalizedTitle,
+        readingTime,
         articleValid: false,
         articleWarnings: warnings,
         articleTitleSource,
@@ -199,6 +239,7 @@ export default defineTransformer({
       return {
         ...content,
         title: normalizedTitle,
+        readingTime,
         articleValid: true,
         articleWarnings: warnings.length > 0 ? warnings : undefined,
         articleTitleSource,
@@ -210,8 +251,9 @@ export default defineTransformer({
       title: normalizedTitle,
       body: {
         ...content.body,
-        value: bodyValue.filter((_, index) => index !== firstBlockIndex),
+        value: articleBodyValue,
       },
+      readingTime,
       articleValid: true,
       articleWarnings: warnings.length > 0 ? warnings : undefined,
       articleTitleSource,

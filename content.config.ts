@@ -24,6 +24,11 @@ export default defineContentConfig({
         articleValid: z.boolean().optional(),
         articleWarnings: z.array(z.string()).optional(),
         articleTitleSource: z.enum(["frontmatter", "h1", "missing"]).optional(),
+        readingTime: z.object({
+          wordCount: z.number().int().min(0),
+          minutes: z.number().int().min(1).optional(),
+          fastMinutes: z.number().int().min(1).optional(),
+        }).optional(),
       }),
     }),
     snippets: defineCollection({

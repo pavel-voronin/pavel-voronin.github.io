@@ -2,7 +2,7 @@
   <PageSection>
     <template v-if="isArticleValid" #header>
       <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :date-updated="page?.date_updated" :icon="page?.icon" :topics="topicTags"
-        :title-lines="titleLines" />
+        :title-lines="titleLines" :reading-time="readingTime" />
     </template>
 
     <ArticleLanguageLinks v-if="isArticleValid && translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />
@@ -66,6 +66,14 @@ const titleLines = computed(() => {
   }
 
   return Math.min(6, Math.max(1, parsedValue))
+})
+
+const readingTime = computed(() => {
+  if (!isArticleValid.value) {
+    return null
+  }
+
+  return estimateReadingTime(page.value?.readingTime, page.value?.language)
 })
 
 if (!page.value) {

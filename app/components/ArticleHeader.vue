@@ -28,6 +28,12 @@
         :key="topic"
         :topic="topic"
       />
+
+      <ArticleReadingTime
+        v-if="normalizedReadingTime"
+        :minutes="normalizedReadingTime.minutes"
+        :fast-minutes="normalizedReadingTime.fastMinutes"
+      />
     </div>
   </header>
 </template>
@@ -40,6 +46,10 @@ const props = defineProps<{
   icon?: string
   topics?: string[]
   titleLines?: number
+  readingTime?: {
+    minutes?: number | null
+    fastMinutes?: number | null
+  } | null
 }>()
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
@@ -64,6 +74,20 @@ const normalizedTopics = computed(() => {
   return (props.topics ?? [])
     .map(topic => topic.trim())
     .filter(Boolean)
+})
+
+const normalizedReadingTime = computed(() => {
+  const minutes = props.readingTime?.minutes
+  const fastMinutes = props.readingTime?.fastMinutes
+
+  if (typeof minutes !== 'number' || typeof fastMinutes !== 'number') {
+    return null
+  }
+
+  return {
+    minutes: Math.max(1, Math.round(minutes)),
+    fastMinutes: Math.max(1, Math.round(fastMinutes)),
+  }
 })
 
 const hasMetaRow = computed(() => {
