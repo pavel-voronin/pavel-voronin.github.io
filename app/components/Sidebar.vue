@@ -82,6 +82,14 @@
             Twitter / X
           </AppLink>
         </li>
+        <li>
+          <AppLink href="/rss.xml" external silent no-visited class="linkRow">
+            <template #left>
+              <Icon name="streamline-ultimate-color:rss-feed" />
+            </template>
+            RSS
+          </AppLink>
+        </li>
       </ul>
     </section>
   </aside>

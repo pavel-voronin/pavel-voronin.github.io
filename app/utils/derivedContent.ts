@@ -6,7 +6,9 @@ type PublishDestination = 'blog' | 'topics' | 'all'
 export type ContentItem = {
   path?: string
   title?: string
+  description?: string | null
   date?: string | null
+  date_updated?: string | null
   icon?: string | null
   language?: string | null
   translationKey?: string | null
@@ -18,8 +20,11 @@ export type ContentItem = {
 export type BlogPost = {
   path: string
   title: string
+  description?: string | null
   date?: string | null
+  date_updated?: string | null
   icon?: string | null
+  topics: string[]
 }
 
 export type TopicRegistryItem = {
@@ -90,11 +95,15 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
       continue
     }
 
+    const topics = splitTopics(item.topics)
     const blogPost = {
       path: item.path,
       title: item.title,
+      description: item.description ?? null,
       date: item.date ?? null,
+      date_updated: item.date_updated ?? null,
       icon: item.icon ?? null,
+      topics,
     }
 
     if (isPublishedToBlock(item)) {
@@ -105,7 +114,7 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
       continue
     }
 
-    const topicSlugs = [...new Set(splitTopics(item.topics).map(topic => topicSlug(topic)).filter(Boolean))]
+    const topicSlugs = [...new Set(topics.map(topic => topicSlug(topic)).filter(Boolean))]
 
     for (const slug of topicSlugs) {
       const existing = topicRegistryMap.get(slug)
@@ -115,7 +124,7 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
       }
       else {
         topicRegistryMap.set(slug, {
-          title: splitTopics(item.topics).find(topic => topicSlug(topic) === slug) ?? slug,
+          title: topics.find(topic => topicSlug(topic) === slug) ?? slug,
           slug,
           count: 1,
         })

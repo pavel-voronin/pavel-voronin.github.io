@@ -1,5 +1,11 @@
 <template>
-  <NuxtLink :to="to" :href="href" :target="target" :class="nuxtLink({ silent, noVisited, class: $attrs.class as string })">
+  <NuxtLink
+    :to="to"
+    :href="href"
+    :target="target"
+    :external="external"
+    :class="nuxtLink({ silent, noVisited, class: $attrs.class as string })"
+  >
     <span v-if="$slots.left" class="icon">
       <slot name="left" />
     </span>
@@ -19,6 +25,7 @@ const props = defineProps<{
   to?: string
   href?: string
   target?: string
+  external?: boolean
   silent?: boolean
   noVisited?: boolean
 }>()

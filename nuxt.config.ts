@@ -14,6 +14,30 @@ const CONTENT_PRERENDER_ROUTE_PATHS = getContentMarkdownFiles(
   const relativePath = relative(CONTENT_DIRECTORY, file);
   return toContentRoutePath(relativePath);
 });
+const FEED_CACHE_TIME_SECONDS = 60 * 15;
+const FEED_ROUTES = [
+  {
+    key: "rss-feed",
+    path: "/rss.xml",
+    type: "rss2",
+    mimeType: "application/rss+xml",
+    title: "Pavel Voronin RSS Feed",
+  },
+  {
+    key: "atom-feed",
+    path: "/atom.xml",
+    type: "atom1",
+    mimeType: "application/atom+xml",
+    title: "Pavel Voronin Atom Feed",
+  },
+  {
+    key: "json-feed",
+    path: "/feed.json",
+    type: "json1",
+    mimeType: "application/feed+json",
+    title: "Pavel Voronin JSON Feed",
+  },
+] as const;
 
 function getContentVueFiles(rootDir: string): string[] {
   const stack = [rootDir];
@@ -146,6 +170,15 @@ export default defineNuxtConfig({
           type: "image/svg+xml",
           href: "/favicon.svg",
         },
+        ...FEED_ROUTES.map((feedRoute) => {
+          return {
+            key: feedRoute.key,
+            rel: "alternate",
+            type: feedRoute.mimeType,
+            title: feedRoute.title,
+            href: feedRoute.path,
+          };
+        }),
       ],
     },
   },
@@ -154,7 +187,7 @@ export default defineNuxtConfig({
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
     },
   },
-  modules: ["@nuxt/content", "@nuxt/icon"],
+  modules: ["@nuxt/content", "@nuxt/icon", "nuxt-module-feed"],
   icon: {
     provider: process.env.NODE_ENV === "development" ? "iconify" : "none",
     clientBundle: {
@@ -188,10 +221,22 @@ export default defineNuxtConfig({
       },
     },
   },
+  feed: {
+    sources: FEED_ROUTES.map((feedRoute) => {
+      return {
+        path: feedRoute.path,
+        type: feedRoute.type,
+        cacheTime: FEED_CACHE_TIME_SECONDS,
+      };
+    }),
+  },
   css: ["~/assets/css/main.css"],
   nitro: {
     prerender: {
-      routes: CONTENT_PRERENDER_ROUTE_PATHS,
+      routes: [
+        ...CONTENT_PRERENDER_ROUTE_PATHS,
+        ...FEED_ROUTES.map(feedRoute => feedRoute.path),
+      ],
     },
   },
   vite: {
