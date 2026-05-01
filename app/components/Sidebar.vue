@@ -3,6 +3,8 @@
     <div>
       <AppLink to="/" silent class="homeLink">
         Pavel Voronin
+        <span class="humanWide">(human)</span>
+        <span class="humanNarrow">human</span>
       </AppLink>
       <p class="oneLiner">
         I've been writing code since the early '90s. Three decades later, I'm still curious — about AI, architecture,
@@ -114,16 +116,36 @@ section {
 }
 
 .homeLink {
-  @apply text-2xl font-semibold tracking-tight text-heading;
+  @apply text-2xl font-semibold tracking-tight text-heading max-[1040px]:flex-col max-[1040px]:items-start max-[1040px]:gap-0;
+}
+
+.humanWide {
+  @apply text-xl font-medium tracking-normal text-caption max-[1040px]:hidden;
+}
+
+.humanNarrow {
+  @apply hidden text-xl font-medium tracking-normal text-caption max-[1040px]:inline;
 }
 
 .oneLiner {
-  @apply mt-3 text-sm leading-6 text-muted;
+  @apply mt-3 text-sm leading-6 text-muted max-[1040px]:mt-4;
 }
 
-@container (width < 17.4ch) {
+@container (width < calc(17.4ch + 2px)) {
+  .homeLink {
+    @apply w-full flex-col items-center gap-0;
+  }
+
+  .humanWide {
+    @apply hidden;
+  }
+
+  .humanNarrow {
+    @apply inline;
+  }
+
   .oneLiner {
-    display: none;
+    @apply hidden;
   }
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
   <header class="topBar">
-    <AppLink to="/" silent class="brand">Pavel Voronin</AppLink>
+    <AppLink to="/" silent class="brand">
+      Pavel Voronin
+      <span class="brandHuman">(human)</span>
+    </AppLink>
 
     <nav class="nav">
       <AppLink to="/blog" silent class="navLink">
@@ -42,6 +45,10 @@
 
 .brand {
   @apply text-lg font-semibold tracking-tight text-heading no-underline whitespace-nowrap;
+}
+
+.brandHuman {
+  @apply text-sm font-medium tracking-normal text-caption;
 }
 
 .nav {
