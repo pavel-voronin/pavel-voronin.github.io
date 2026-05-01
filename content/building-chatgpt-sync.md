@@ -11,6 +11,14 @@ image: og-image.jpg
 
 # Building `chatgpt-sync`
 
+::external-link-card
+---
+url: https://github.com/pavel-voronin/chatgpt-sync
+title: pavel-voronin/chatgpt-sync
+icon: streamline-ultimate-color:github-logo-1
+---
+::
+
 [`chatgpt-sync`](https://github.com/pavel-voronin/chatgpt-sync) started as a small local tool for exporting ChatGPT conversations into Markdown files. The initial idea was simple: use an already authenticated ChatGPT session, read the conversation list, fetch each conversation, render it into Markdown, and keep the result in a local workspace. After a few iterations, the project became less of a one-shot exporter and more of a sync engine. The difference is mostly operational: an exporter can assume that it runs once and either succeeds or fails, while a sync engine has to handle repeated runs, partial progress, moved files, missing assets, unavailable conversations, backend failures, and changes in the remote data model.
 
 The project is a TypeScript/Node CLI. It does not use the public OpenAI API and it does not implement its own login flow. Instead, it connects to a separate Chrome instance through Chrome DevTools Protocol and uses an already authenticated ChatGPT profile. Chrome is used as the authenticated browser context; the tool then performs backend requests from inside that context and writes Markdown files, assets, and an `index.json` file into a local workspace.
