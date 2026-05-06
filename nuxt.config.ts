@@ -190,8 +190,15 @@ export default defineNuxtConfig({
   modules: ["@nuxt/content", "@nuxt/icon", "nuxt-module-feed"],
   icon: {
     provider: process.env.NODE_ENV === "development" ? "iconify" : "none",
+    customCollections: [
+      {
+        prefix: "local",
+        dir: "./app/assets/icons",
+      },
+    ],
     clientBundle: {
       scan: true,
+      includeCustomCollections: true,
     },
   },
   content: {

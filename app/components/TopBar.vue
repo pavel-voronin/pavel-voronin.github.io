@@ -21,7 +21,7 @@
         <Icon name="streamline-ultimate-color:github-logo-1" />
       </AppLink>
       <AppLink href="https://x.com/pavel_voronin" target="_blank" silent no-visited class="socialLink">
-        <Icon name="logos:twitter" />
+        <Icon name="local:twitter-verified" />
       </AppLink>
       <AppLink href="https://www.linkedin.com/in/pavelvoronin/" target="_blank" silent no-visited class="socialLink">
         <Icon name="streamline-ultimate-color:linkedin-logo" />

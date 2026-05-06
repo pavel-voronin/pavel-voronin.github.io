@@ -77,7 +77,7 @@
         <li>
           <AppLink href="https://x.com/pavel_voronin" target="_blank" silent no-visited class="linkRow">
             <template #left>
-              <Icon name="logos:twitter" />
+              <Icon name="local:twitter-verified" />
             </template>
             Twitter / X
           </AppLink>
