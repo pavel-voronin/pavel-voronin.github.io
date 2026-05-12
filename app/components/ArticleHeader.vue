@@ -15,7 +15,7 @@
     </div>
 
     <h1 class="articleHeading">
-      <ArticleTitleText :title="props.title" />
+      <ArticleTitleText :title="props.title" :title-easter-egg="props.titleEasterEgg" />
     </h1>
 
     <div v-if="normalizedTopics.length > 0" class="articleTopics">
@@ -39,6 +39,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TitleEasterEggConfig } from '~/utils/titleFormatting'
+
 const props = defineProps<{
   title: string
   date?: string
@@ -46,6 +48,7 @@ const props = defineProps<{
   icon?: string
   topics?: string[]
   titleLines?: number
+  titleEasterEgg?: TitleEasterEggConfig | null
   readingTime?: {
     minutes?: number | null
     fastMinutes?: number | null

@@ -2,7 +2,7 @@
   <PageSection>
     <template v-if="isArticleValid" #header>
       <ArticleHeader :title="page?.title ?? ''" :date="page?.date" :date-updated="page?.date_updated" :icon="page?.icon" :topics="topicTags"
-        :title-lines="titleLines" :reading-time="readingTime" />
+        :title-lines="titleLines" :title-easter-egg="page?.titleEasterEgg" :reading-time="readingTime" />
     </template>
 
     <ArticleLanguageLinks v-if="isArticleValid && translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />

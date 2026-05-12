@@ -21,6 +21,12 @@ export default defineContentConfig({
         comments: z.boolean().optional(),
         topics: z.union([z.array(z.string()), z.string()]).optional(),
         titleLines: z.number().int().min(1).max(6).default(1).optional(),
+        titleEasterEgg: z.object({
+          from: z.string().min(1),
+          to: z.string().min(1),
+          delayMs: z.number().int().min(0).max(10000).optional(),
+          shakeMs: z.number().int().min(0).max(10000).optional(),
+        }).optional(),
         articleValid: z.boolean().optional(),
         articleWarnings: z.array(z.string()).optional(),
         articleTitleSource: z.enum(["frontmatter", "h1", "missing"]).optional(),
