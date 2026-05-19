@@ -7,23 +7,28 @@
 
     <ArticleLanguageLinks v-if="isArticleValid && translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />
 
-    <ContentRenderer v-if="page" class="articleBody" :value="page" />
+    <ArticleTableOfContents v-if="isArticleValid" :links="tocLinks" intro-id="article-intro" />
+
+    <ContentRenderer v-if="page" id="article-intro" class="articleBody" :value="page" />
 
     <UtterancesComments v-if="shouldShowComments" :issue-term="commentsIssueTerm" />
   </PageSection>
 </template>
 
 <script setup lang="ts">
+import type { TocLink } from '@nuxt/content'
 import { splitTopics } from '~/utils/topics'
 
 const route = useRoute()
-const slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
-
-const { data: page } = await useAsyncData(`content-${slug}`, () => {
-  return queryCollection('content')
-    .path(`/${slug}`)
-    .first()
+const slug = computed(() => {
+  return Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
 })
+
+const { data: page } = await useAsyncData(() => `content-${slug.value}`, () => {
+  return queryCollection('content')
+    .path(`/${slug.value}`)
+    .first()
+}, { watch: [slug] })
 
 const derivedContent = await useDerivedContent()
 
@@ -42,7 +47,7 @@ const translationLinks = computed(() => {
 const commentsIssueTerm = computed(() => {
   return translationLinks.value.find(translation => translation.language === 'en')?.path
     ?? page.value?.path
-    ?? `/${slug}`
+    ?? `/${slug.value}`
 })
 
 const shouldShowComments = computed(() => {
@@ -55,6 +60,14 @@ const topicTags = computed(() => {
   }
 
   return splitTopics(page.value?.topics)
+})
+
+const tocLinks = computed<TocLink[]>(() => {
+  if (!isArticleValid.value) {
+    return []
+  }
+
+  return page.value?.body?.toc?.links ?? []
 })
 
 const titleLines = computed(() => {

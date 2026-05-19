@@ -205,6 +205,10 @@ export default defineNuxtConfig({
     build: {
       transformers: [ARTICLE_TITLE_TRANSFORMER],
       markdown: {
+        toc: {
+          depth: 4,
+          searchDepth: 4,
+        },
         highlight: {
           theme: {
             default: "material-theme",
