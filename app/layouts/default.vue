@@ -37,7 +37,7 @@
 }
 
 .sidebar {
-  @apply hidden sidenav:fixed sidenav:top-0 sidenav:left-[max(0px,calc((100vw-85rem)/2))] sidenav:z-10 sidenav:flex sidenav:h-screen sidenav:w-96 sidenav:self-start sidenav:overflow-y-auto sidenav:overscroll-y-contain border-r border-edge/70 px-8 py-12;
+  @apply hidden sidenav:flex border-r border-edge/70 px-8 py-12;
 }
 
 .sidebarInner {
@@ -46,7 +46,7 @@
 }
 
 .content {
-  @apply min-h-screen sidenav:col-start-2;
+  @apply min-h-screen;
 }
 
 .contentBody {
