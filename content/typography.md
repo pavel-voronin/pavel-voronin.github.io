@@ -202,6 +202,30 @@ title-lines: 3
 ---
 ::
 
+## File artifact combinations
+
+### Text file with preview
+
+::file-artifact
+---
+name: Skill Artifact
+description: A reusable skill produced while building a project. It packages the sync logic for re-use in other projects.
+filename: /typography/sample-artifact.md
+icon: local:office-file-md
+expandable: true
+---
+::
+
+### Binary file without preview
+
+::file-artifact
+---
+name: Binary Artifact
+filename: /og-image.jpg
+icon: streamline-ultimate-color:image-file-jpg
+---
+::
+
 ## External link card combinations
 
 ### URL only

@@ -3,7 +3,7 @@ import { buildDerivedContent, emptyDerivedContent, type DerivedContent } from '~
 export const useDerivedContent = async () => {
   const state = useState<DerivedContent>('derived-content', () => emptyDerivedContent)
 
-  if (state.value.blogPosts.length > 0 || state.value.topicRegistry.length > 0) {
+  if (!import.meta.dev && (state.value.blogPosts.length > 0 || state.value.topicRegistry.length > 0)) {
     return state.value
   }
 

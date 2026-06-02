@@ -12,6 +12,7 @@
     "@embedos/debian-bullseye-busybox-runtime": "^0.2.0",
     "@embedos/vue": "^0.3.0",
     "@iconify-json/logos": "^1.2.11",
+    "@iconify-json/lucide": "^1.2.111",
     "@iconify-json/simple-icons": "^1.2.79",
     "@iconify-json/streamline-ultimate-color": "^1.2.2",
     "@nuxt/content": "^3.11.2",
