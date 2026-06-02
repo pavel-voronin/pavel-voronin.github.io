@@ -22,7 +22,7 @@
 @reference "~/assets/css/main.css";
 
 .page {
-  @apply min-h-screen bg-surface text-body font-sans pt-14 sidenav:pt-0;
+  @apply min-h-screen bg-surface text-body font-sans;
 }
 
 .columns {
@@ -37,7 +37,7 @@
 }
 
 .sidebar {
-  @apply hidden sidenav:flex border-r border-edge/70 px-8 py-12;
+  @apply hidden sidenav:fixed sidenav:top-0 sidenav:left-[max(0px,calc((100vw-85rem)/2))] sidenav:z-10 sidenav:flex sidenav:h-screen sidenav:w-96 sidenav:self-start sidenav:overflow-y-auto sidenav:overscroll-y-contain border-r border-edge/70 px-8 py-12;
 }
 
 .sidebarInner {
@@ -46,11 +46,11 @@
 }
 
 .content {
-  @apply min-h-screen;
+  @apply min-h-screen sidenav:col-start-2;
 }
 
 .contentBody {
-  @apply py-12 font-sans;
+  @apply pt-8 pb-12 sidenav:py-12 font-sans;
   padding-inline: var(--content-guard);
   max-width: calc(var(--content-guard) * 2 + var(--content-max));
   min-width: calc(var(--content-guard) * 2 + var(--content-min));

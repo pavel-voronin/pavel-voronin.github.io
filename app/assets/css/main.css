@@ -4,7 +4,11 @@
 
 @layer base {
   html {
-    @apply bg-surface;
+    @apply bg-surface overscroll-y-none;
+  }
+
+  body {
+    @apply overscroll-y-none;
   }
 }
 

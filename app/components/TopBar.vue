@@ -34,7 +34,7 @@
 @reference "~/assets/css/main.css";
 
 .topBar {
-  @apply fixed top-0 left-0 right-0 h-14 z-50 flex items-center gap-3 px-4 bg-surface border-b border-edge/70;
+  @apply h-14 flex items-center gap-3 px-4 bg-surface;
 }
 
 @variant sidenav {
