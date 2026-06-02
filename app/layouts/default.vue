@@ -37,7 +37,7 @@
 }
 
 .sidebar {
-  @apply hidden sidenav:flex border-r border-edge/70 px-8 py-12;
+  @apply hidden sidenav:sticky sidenav:top-0 sidenav:flex sidenav:h-dvh sidenav:self-start sidenav:overflow-y-auto sidenav:overscroll-y-contain border-r border-edge/70 px-8 py-12;
 }
 
 .sidebarInner {
