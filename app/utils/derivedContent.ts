@@ -24,6 +24,7 @@ export type BlogPost = {
   date?: string | null
   date_updated?: string | null
   icon?: string | null
+  languageLinks: ArticleLanguageLinks
   topics: string[]
 }
 
@@ -38,6 +39,13 @@ export type ArticleTranslation = {
   path: string
   title: string
 }
+
+export type ArticleLanguageLink = {
+  language: string
+  path: string
+}
+
+export type ArticleLanguageLinks = [ArticleLanguageLink, ...ArticleLanguageLink[]]
 
 export type DerivedContent = {
   blogPosts: BlogPost[]
@@ -96,13 +104,17 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
     }
 
     const topics = splitTopics(item.topics)
-    const blogPost = {
+    const blogPost: BlogPost = {
       path: item.path,
       title: item.title,
       description: item.description ?? null,
       date: item.date ?? null,
       date_updated: item.date_updated ?? null,
       icon: item.icon ?? null,
+      languageLinks: [{
+        language: normalizeLanguage(item.language),
+        path: item.path,
+      }],
       topics,
     }
 
@@ -183,6 +195,27 @@ export const buildDerivedContent = (items: ContentItem[]): DerivedContent => {
     for (const translation of translations) {
       articleTranslationsByPath[translation.path] = translations
     }
+  }
+
+  for (const post of blogPosts) {
+    const [firstTranslation, ...otherTranslations] = articleTranslationsByPath[post.path] ?? []
+
+    if (!firstTranslation) {
+      continue
+    }
+
+    post.languageLinks = [
+      {
+        language: firstTranslation.language,
+        path: firstTranslation.path,
+      },
+      ...otherTranslations.map((translation) => {
+        return {
+          language: translation.language,
+          path: translation.path,
+        }
+      }),
+    ]
   }
 
   return {

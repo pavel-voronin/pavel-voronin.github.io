@@ -1,30 +1,50 @@
 <template>
   <ul class="postsList">
-    <li v-for="post in posts" :key="post.path" class="postItem">
+    <li v-for="post in normalizedPosts" :key="post.path" class="postItem">
       <span class="postDateSlot">
         <time v-if="post.date" :datetime="post.date" class="postDate">{{ formatPostDate(post.date) }}</time>
       </span>
-      <AppLink :to="post.path" class="postLink">
-        <template v-if="post.icon" #left>
-          <Icon :name="post.icon" />
-        </template>
-        <span class="postTitle">
-          <ArticleTitleText :title="post.title" />
+      <span class="postContent">
+        <NuxtLink :to="post.path" class="postLink">
+          <span v-if="post.icon" class="postIcon">
+            <Icon :name="post.icon" />
+          </span>
+          <span class="postTitle">
+            <ArticleTitleText :title="post.title" />
+          </span>
+        </NuxtLink>&nbsp;<span class="postLanguageJoin" :aria-label="post.languageLabel">
+          <span class="postLanguageTags">
+            <NuxtLink
+              v-for="language in post.languageLinks"
+              :key="`${language.code}-${language.path}`"
+              :to="language.path"
+              class="postLanguageTag"
+              :aria-label="language.label"
+            >
+              {{ language.code }}
+            </NuxtLink>
+          </span>
         </span>
-      </AppLink>
+      </span>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
+type PostLanguageLink = {
+  language: string
+  path: string
+}
+
 type PostListItem = {
   path: string
   title: string
   date?: string | null
   icon?: string | null
+  languageLinks: [PostLanguageLink, ...PostLanguageLink[]]
 }
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   posts?: PostListItem[] | null
 }>(), {
   posts: () => [],
@@ -41,6 +61,34 @@ const fullDateFormatter = new Intl.DateTimeFormat('en-US', {
 const recentDateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
   day: '2-digit',
+})
+
+const toLanguageCode = (value: string) => {
+  return value.trim().toUpperCase()
+}
+
+const toLanguageLinkLabel = (postTitle: string, languageCode: string) => {
+  return `Read ${postTitle} in ${languageCode}`
+}
+
+const normalizedPosts = computed(() => {
+  return (props.posts ?? []).map((post) => {
+    const languageLinks = post.languageLinks.map((languageLink) => {
+      const code = toLanguageCode(languageLink.language)
+
+      return {
+        code,
+        path: languageLink.path,
+        label: toLanguageLinkLabel(post.title, code),
+      }
+    })
+
+    return {
+      ...post,
+      languageLinks,
+      languageLabel: `Available languages: ${languageLinks.map(languageLink => languageLink.code).join(', ')}`,
+    }
+  })
 })
 
 const formatPostDate = (value: string) => {
@@ -63,24 +111,44 @@ const formatPostDate = (value: string) => {
 }
 
 .postItem {
-  @apply grid items-start gap-x-0 gap-y-0;
-  grid-template-columns: 4rem minmax(0, 1fr);
+  @apply grid grid-cols-[4rem_minmax(0,1fr)] items-start gap-x-0 gap-y-0;
 }
 
 .postItem + .postItem {
   @apply mt-3 border-t border-edge-light/80 pt-3;
 }
 
+.postContent {
+  @apply block min-w-0 text-pretty;
+}
+
 .postLink {
-  @apply inline-flex min-w-0 items-start justify-self-start gap-1.5;
+  @apply inline text-accent underline underline-offset-2 hover:text-accent-soft;
+}
+
+.postIcon {
+  @apply mr-1.5 inline-flex align-middle *:size-[1em];
 }
 
 .postTitle {
-  @apply block min-w-0 flex-1 whitespace-normal wrap-break-word;
+  @apply inline whitespace-normal wrap-break-word;
 }
 
-.postLink :deep(.icon) {
-  @apply self-start pt-[0.22em];
+.postLanguageJoin {
+  @apply whitespace-nowrap opacity-0 transition-opacity duration-150;
+}
+
+.postItem:hover .postLanguageJoin,
+.postItem:focus-within .postLanguageJoin {
+  @apply opacity-100;
+}
+
+.postLanguageTags {
+  @apply inline-flex items-center gap-1 align-baseline;
+}
+
+.postLanguageTag {
+  @apply inline-flex h-[0.95rem] items-center rounded-[0.1875rem] border border-edge bg-transparent px-1 text-[0.625rem] font-bold uppercase leading-none text-caption no-underline transition-colors hover:border-accent-soft hover:bg-accent-surface/70 hover:text-accent focus-visible:border-accent-soft focus-visible:bg-accent-surface/70 focus-visible:text-accent focus-visible:outline-none;
 }
 
 .postDateSlot {
