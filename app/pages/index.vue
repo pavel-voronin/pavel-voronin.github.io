@@ -15,6 +15,14 @@
       </template>
 
       <PostList :posts="latestPosts" />
+      <div class="freshMore">
+        <AppLink to="/blog" class="freshMoreLink">
+          View all posts
+          <template #right>
+            &rarr;
+          </template>
+        </AppLink>
+      </div>
     </PageSection>
   </div>
 </template>
@@ -29,5 +37,13 @@ const latestPosts = derivedContent.blogPosts.slice(0, 5)
 
 .homePage {
   @apply w-full flex flex-col gap-10;
+}
+
+.freshMore {
+  @apply mt-7;
+}
+
+.freshMoreLink {
+  @apply text-lg no-underline hover:no-underline;
 }
 </style>
