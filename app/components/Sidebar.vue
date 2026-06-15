@@ -63,7 +63,8 @@
             <template #left>
               <Icon name="streamline-ultimate-color:github-logo-1" />
             </template>
-            GitHub
+            <span class="linkLabel">GitHub</span>
+            <GitHubContributionPixels />
           </AppLink>
         </li>
         <li>
@@ -120,7 +121,11 @@ section {
 }
 
 .linkRow {
-  @apply flex rounded px-2 py-1.5 text-sm text-subtle no-underline transition hover:bg-accent-surface/70 hover:text-heading;
+  @apply flex w-full items-center overflow-hidden rounded px-2 py-1.5 text-sm text-subtle no-underline transition hover:bg-accent-surface/70 hover:text-heading;
+}
+
+.linkLabel {
+  @apply shrink-0;
 }
 
 .homeLink {

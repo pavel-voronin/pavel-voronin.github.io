@@ -39,6 +39,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Fetch GitHub contributions
+        continue-on-error: true
+        run: npm run github:contributions
+        working-directory: ${{ env.BUILD_PATH }}
+        env:
+          GH_CONTRIBUTIONS_LOGIN: pavel-voronin
+          GH_CONTRIBUTIONS_TOKEN: ${{ secrets.GH_CONTRIBUTIONS_TOKEN }}
       - name: Build with Nuxt
         run: npm run generate
         working-directory: ${{ env.BUILD_PATH }}

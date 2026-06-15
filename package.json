@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "github:contributions": "node scripts/fetch-github-contributions.mjs",
     "preview": "nuxt preview"
   },
   "dependencies": {
