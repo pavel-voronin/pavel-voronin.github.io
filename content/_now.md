@@ -1,1 +1,1 @@
-I'm building [**AgenTG**](https://github.com/pavel-voronin/agentg) - Telegram _client_ for my agent so he can read my chats, groups and channels and send my secrets back to you if you ask kindly :) (65 of 250%)
+I'm building [**AgenTG**](https://github.com/pavel-voronin/agentg) - API/MCP-enabled Telegram _client_ for your agent (65 of 100%)
