@@ -1,1 +1,1 @@
-I'm building [**AgenTG**](https://github.com/pavel-voronin/agentg) - API/MCP-enabled Telegram _client_ for your agent (65 of 100%)
+I'm tilting trying to find new direction
