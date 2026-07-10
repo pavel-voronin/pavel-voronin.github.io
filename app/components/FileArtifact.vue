@@ -225,4 +225,8 @@ const togglePreview = () => {
 .fileArtifactPreview :deep(.prosePre) {
   @apply my-0 rounded-none;
 }
+
+.fileArtifactPreview :deep(.codeBlockFrame) {
+  @apply my-0;
+}
 </style>
