@@ -35,6 +35,7 @@ import type { TocLink } from '@nuxt/content'
 const props = defineProps<{
   links: TocLink[]
   introId: string
+  introText: string
 }>()
 
 type ArticleTocLink = Pick<TocLink, 'id' | 'text' | 'depth'>
@@ -65,7 +66,7 @@ const articleLinks = computed<ArticleTocLink[]>(() => {
   return [
     {
       id: props.introId,
-      text: 'Intro',
+      text: props.introText,
       depth: 2,
     },
     ...flatLinks.value,

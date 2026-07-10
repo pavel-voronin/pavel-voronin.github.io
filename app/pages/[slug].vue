@@ -7,7 +7,7 @@
 
     <ArticleLanguageLinks v-if="isArticleValid && translationLinks.length > 1" :current-path="page?.path" :translations="translationLinks" />
 
-    <ArticleTableOfContents v-if="isArticleValid" :links="tocLinks" intro-id="article-intro" />
+    <ArticleTableOfContents v-if="isArticleValid" :links="tocLinks" intro-id="article-intro" :intro-text="tocIntroText" />
 
     <ContentRenderer v-if="page" id="article-intro" class="articleBody" :value="page" />
 
@@ -68,6 +68,10 @@ const tocLinks = computed<TocLink[]>(() => {
   }
 
   return page.value?.body?.toc?.links ?? []
+})
+
+const tocIntroText = computed(() => {
+  return page.value?.language === 'ru' ? 'Начало' : 'Intro'
 })
 
 const titleLines = computed(() => {
