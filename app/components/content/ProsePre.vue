@@ -100,7 +100,12 @@ onBeforeUnmount(() => {
 }
 
 .copyCodeButton {
-  @apply absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-md border border-white/10 bg-white/10 text-code-text opacity-80 shadow-sm transition hover:bg-white/15 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft;
+  @apply pointer-events-none absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-md border border-white/10 bg-white/10 text-code-text opacity-0 shadow-sm transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft;
+}
+
+.codeBlockFrame:hover .copyCodeButton,
+.copyCodeButton:focus-visible {
+  @apply pointer-events-auto opacity-100;
 }
 
 .copyCodeIcon {
