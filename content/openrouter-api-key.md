@@ -4,6 +4,7 @@ description: A short step-by-step guide for creating an OpenRouter API key and t
 date: 2026-03-22
 publish-to: topics
 icon: simple-icons:openrouter
+image: og-image.jpg
 titleLines: 1
 topics: instructions
 ---

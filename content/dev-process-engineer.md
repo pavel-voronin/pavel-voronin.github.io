@@ -4,6 +4,7 @@ description: The problem isn’t writing code anymore. It’s running the system
 date: 2026-02-04
 publish-to: all
 icon: streamline-ultimate-color:module-four
+image: og-image.jpg
 titleLines: 2
 comments: true
 topics: management, AI

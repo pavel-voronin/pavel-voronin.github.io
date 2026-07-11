@@ -4,6 +4,7 @@ description: From reading Chrome’s bookmarks file to a CDP gateway over chrome
 date: 2026-03-09
 publish-to: all
 icon: streamline-ultimate-color:app-window-bookmark
+image: og-image.jpg
 titleLines: 2
 comments: true
 topics: build log, AI toolchain

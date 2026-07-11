@@ -4,6 +4,7 @@ description: How zero-friction AI makes it easier to start than to finish, and w
 date: 2026-04-21
 publish-to: all
 icon: streamline-ultimate-color:wifi-off
+image: og-image.jpg
 titleLines: 1
 comments: true
 topics: AI, productivity

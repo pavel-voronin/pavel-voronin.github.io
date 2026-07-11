@@ -5,7 +5,7 @@ date: 2026-06-02
 publish-to: all
 translationKey: cognitive-debt
 icon: streamline-ultimate-color:programming-user-chat
-image: og-image.png
+image: og-image.jpg
 titleLines: 1
 comments: true
 topics: AI, engineering
