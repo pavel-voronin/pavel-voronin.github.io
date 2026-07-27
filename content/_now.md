@@ -1,1 +1,1 @@
-I'm creating [air mail arcade demo](http://postmail.kolpaque.dev)
+I'm settling Win98 in your browser with old games in it
