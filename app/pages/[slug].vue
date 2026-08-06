@@ -156,6 +156,9 @@ useSeoMeta({
 
 useHead(() => {
   const head = {
+    htmlAttrs: {
+      lang: page.value?.language?.trim() || 'en',
+    },
     title: articleTitle.value,
     link: [
       { key: 'site-favicon', rel: 'icon', type: 'image/svg+xml', href: faviconHref.value },
